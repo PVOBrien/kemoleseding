@@ -10,7 +10,7 @@ Clicking on each module will go to details for the module include:
 - topics that are discussed within the film (and therefore should likely come up in the discussion of the film)
 - supporting documents (__stretch__)
 
-Additional next steps/stretch goals include:
+Next steps/stretch goals include:
 - the actual movie file(s) available for download or streaming
 - the ability to upload surveys and then have them processed to results (__BIG STRETCH__)
 
