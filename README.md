@@ -1,6 +1,6 @@
 # kemoleseding
 
-This will be an app for my documentary [_Ke mo Leseding_](https://www.kemoleseding.com){:target="_blank"}. I intend for it to - at the beginning - have a main page that has:
+This will be an app for my documentary [_Ke mo Leseding_](https://www.kemoleseding.com). I intend for it to - at the beginning - have a main page that has:
 - the 4 modules of the film
 - a "meet the dev" option
 - a link to the website
