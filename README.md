@@ -16,7 +16,7 @@ Additional next steps/stretch goals include:
 
 ## The Why?
 
-I have a film. It will be screened in <a href="https://www.google.com/maps/place/Botswana/@-22.3223124,22.4436813,7z/data=!3m1!4b1!4m5!3m4!1s0x1ea44321d1452211:0xf1647c2a8715af7b!8m2!3d-22.328474!4d24.684866" target="_blank">Botswana, Africa</a> and used as tool for HIV/AIDS awareness and education. Part of that is quantitative data input, but by my experience, data input IS A PAIN. At least for my data, I want it simple. Hopefully, I'll be able to incorporate either OCR for field input from uploaded photos (processed in AWS Lambda? idk), or from some library that can suss out specific boxes (filled in or not) and then fill in an entry that way. TBD.
+I have a film. It will be screened in <a href= "https://www.google.com/maps/place/Botswana/@-22.3223124,22.4436813,7z/data=!3m1!4b1!4m5!3m4!1s0x1ea44321d1452211:0xf1647c2a8715af7b!8m2!3d-22.328474!4d24.684866"  target= "_blank" >Botswana, Africa</a> and used as tool for HIV/AIDS awareness and education. Part of that is quantitative data input, but by my experience, data input IS A PAIN. At least for my data, I want it simple. Hopefully, I'll be able to incorporate either OCR for field input from uploaded photos (processed in AWS Lambda? idk), or from some library that can suss out specific boxes (filled in or not) and then fill in an entry that way. TBD.
 
 ## The how?
 
