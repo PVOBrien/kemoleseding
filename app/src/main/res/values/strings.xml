@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Ke mo Leseding</string>
+    <string name="title_activity_shadow_test">shadowTest</string>
+    <string name="title_activity_shadows">shadows</string>
 </resources>
