@@ -47,8 +47,8 @@ fun KemoLesedingTheme() {
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 18.dp),
-            Arrangement.spacedBy(18.dp)
+                .padding(horizontal = 10.dp, vertical = 10.dp),
+            Arrangement.spacedBy(12.dp)
         ) {
             MCard(modOne.title, modOne.summary)
             MCard(modTwo.title, modTwo.summary)
@@ -60,17 +60,8 @@ fun KemoLesedingTheme() {
 
 @Composable
 fun MCard(mCString: String, summary: String) {
-//    Card(
-//        shape = RoundedCornerShape(16.dp),
-//        backgroundColor = kmlRed,
-//        contentColor = Color.White,
-//        border = BorderStroke(2.dp, Color.Black),
-//        modifier = Modifier.shadow(
-//            5.dp,
-//            RoundedCornerShape(16.dp)
-//        ) // shadows only show in emulator, not DefaultPreview. at least at this Android SDK level (23?)
-//    ) {
     var expanded by remember { mutableStateOf(false) }
+
     Button(
         // to be used to show/animate https://developer.android.com/jetpack/compose/animation
         onClick = { expanded = !expanded },
@@ -81,32 +72,31 @@ fun MCard(mCString: String, summary: String) {
             RoundedCornerShape(16.dp)
         )
     ) {
-        Column(modifier = Modifier.padding(0.dp)) {
+        Column (modifier = Modifier.padding(bottom = 3.dp)) {
             Text( // this is the Title
                 text = mCString,
                 Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(top = 0.dp, bottom = 0.dp).offset(y = (-4).dp),
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 4.em,
-//                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = Color.White // otherwise button text defaults to Black
             )
-            ModuleCardBody(summary)
+            ModuleCardBody(summary, expanded)
         }
     }
 }
 //}
 
 @Composable
-fun ModuleCardBody(mSummary: String) {
+fun ModuleCardBody(mSummary: String, isExpanded: Boolean) {
     Row(
         modifier = Modifier
             .wrapContentSize()
-            .padding(top = 3.dp, start = 4.dp, end = 4.dp)
     ) {
         MPic()
-        ModuleDetails(mSummary)
+        ModuleDetails(mSummary, isExpanded)
     }
 }
 
@@ -123,7 +113,7 @@ fun MPic() {
 }
 
 @Composable
-fun ModuleDetails(theSummary: String) {
+fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
     Column(
         Modifier
             .padding(horizontal = Dp(6.0F))
@@ -131,7 +121,7 @@ fun ModuleDetails(theSummary: String) {
     ) {
         Text(
             text = theSummary,
-            maxLines = 6,
+            maxLines = if (isExpanded) Int.MAX_VALUE else 6,
             overflow = TextOverflow.Ellipsis, // https://developer.android.com/jetpack/compose/text
             color = Color.White,
             fontFamily = FontFamily.Serif,
