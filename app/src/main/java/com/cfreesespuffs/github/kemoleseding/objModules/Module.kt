@@ -27,14 +27,14 @@ val modTwo = Module(
 
 val modThree = Module(
     3,
-    "Living with HIV and Coming out Publicly",
+    "Living with HIV & Coming Out Publicly",
     "HIV is not a death sentence. ARVs have progressed to the point that \"U equals U\" meaning \"undetectable equals untransmittable\". Adhering to ARVs can mean a full and normal life. Stanley is just such a testament, being able to walk hundreds of kilometers despite once having had AIDS. ARVs are key to living with HIV, and Botswana has made ARVs free and available to anyone with a positive test.",
     listOf("makes everything easier", "and better", "and awesome")
 )
 
 val modFour = Module(
     4,
-    "The future of HIV in Botswana",
+    "The Future of HIV in Botswana",
     "Botswana has come so far. The prevalence of HIV has dropped year over year, stigma and discrimination is decreasing, and understanding and awareness of HIV treatment continues to rise. All these are signs of great hope for all Batswana. It is because of them all - and HIV activists leading the way - that such positive steps are being made.",
     listOf("eventually", "files", "here")
 )
