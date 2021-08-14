@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -22,10 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
+import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
-import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,49 +43,48 @@ fun KemoLesedingTheme() {
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 32.dp, vertical = 24.dp)
-                .shadow(elevation = 15.dp, shape = RoundedCornerShape(18.dp)),
-            Arrangement.spacedBy(36.dp)
+                .padding(horizontal = 18.dp, vertical = 24.dp),
+//                .shadow(5.dp, RoundedCornerShape(16.dp)),
+            Arrangement.spacedBy(24.dp)
         ) {
-            MCard("the biggestbaddest")
-            androidx.compose.material.Card(
+            MCard(modOne.title)
+            MCard(modTwo.title)
+            MCard(modThree.title)
+            MCard(modFour.title)
+            Card(
                 elevation = 30.dp,
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = kmlRed,
                 contentColor = Color.White,
                 border = BorderStroke(3.dp, Color.Black),
             ) {
-                Module("1")
+                ModuleFunTest("1")
             }
-            androidx.compose.material.Card(
+            Card(
                 elevation = 30.dp,
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = kmlRed,
                 contentColor = Color.White,
                 border = BorderStroke(3.dp, Color.Black),
             ) {
-                Module("The New TitAL")
+                ModuleFunTest("The New TitAL")
             }
-            androidx.compose.material.Card(
+            Card(
                 elevation = 30.dp,
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = kmlRed,
                 contentColor = Color.White,
                 border = BorderStroke(3.dp, Color.Black),
             ) {
-                Module("Diff")
+                ModuleFunTest("Diff")
             }
         }
-        }
-//        ) {
-//            Greeting("Android")
-//        Module()
-//    }
     }
+}
 
 
 @Composable
-fun Module(mString: String) {
+fun ModuleFunTest(mString: String) {
     Row(
         modifier = Modifier
             .wrapContentSize()
@@ -117,8 +114,9 @@ fun MCard(mCString: String) {
         backgroundColor = kmlRed,
         contentColor = Color.White,
         border = BorderStroke(3.dp, Color.Black),
+        modifier = Modifier.shadow(5.dp, RoundedCornerShape(16.dp)) // shadows only show in emulator, not DefaultPreview. at least at this Android SDK level (23?)
     ) {
-        Module(mCString)
+        ModuleFunTest(mCString)
     }
 }
 
@@ -186,7 +184,7 @@ fun ToolbarWidget() {
 
                 // below line is use to give
                 // elevation to our toolbar.
-                elevation = 12.dp
+                elevation = 6.dp
             )
         }, content = {
             KemoLesedingTheme()
@@ -194,12 +192,3 @@ fun ToolbarWidget() {
 }
 
 // "Trash" below
-
-@Composable
-fun Greeting(name: String) {
-    Text(
-        text = "Really!? $name!",
-        fontSize = 23.sp,
-        color = kmlYellow
-    )
-}
