@@ -4,19 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.estimateAnimationDurationMillis
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +31,7 @@ import androidx.compose.ui.unit.em
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
+import com.cfreesespuffs.github.kemoleseding.objModules.Module
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,21 +50,21 @@ fun KemoLesedingTheme() {
         modifier = Modifier.fillMaxSize(),
     ) {
         val modList = listOf<Module>(modOne, modTwo, modThree, modFour)
-        Column(
+        Text(
+            text = "Click each for additional details",
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        LazyColumn(
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 10.dp),
-            Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = "Click each for additional details",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-
-            MCard(modOne.title, modOne.summary, modOne.modPhoto)
-            MCard(modTwo.title, modTwo.summary, modTwo.modPhoto)
-            MCard(modThree.title, modThree.summary, modThree.modPhoto)
-            MCard(modFour.title, modFour.summary, modFour.modPhoto)
+            itemsIndexed(modList) { _, item ->
+                MCard(item.title, item.summary, item.modPhoto)
+            }
+//            MCard(modTwo.title, modTwo.summary, modTwo.modPhoto)
+//            MCard(modThree.title, modThree.summary, modThree.modPhoto)
+//            MCard(modFour.title, modFour.summary, modFour.modPhoto)
         }
     }
 }
