@@ -43,5 +43,5 @@ val modFour = Module(
     "The Future of HIV in Botswana",
     "Botswana has come so far. The prevalence of HIV has dropped year over year, stigma and discrimination is decreasing, and understanding and awareness of HIV treatment continues to rise. All these are signs of great hope for all Batswana. It is because of them all - and HIV activists leading the way - that such positive steps are being made.",
     listOf("eventually", "files", "here"),
-    R.drawable.mod_three_pic
+    R.drawable.mod_four_pic
 )

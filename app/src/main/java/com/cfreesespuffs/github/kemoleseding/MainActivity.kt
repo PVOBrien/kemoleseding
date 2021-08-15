@@ -3,6 +3,8 @@ package com.cfreesespuffs.github.kemoleseding
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -14,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -42,6 +45,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun KemoLesedingTheme() {
     // A surface container using the 'background' color from the theme
@@ -56,19 +60,20 @@ fun KemoLesedingTheme() {
             textAlign = TextAlign.Center
         )
         LazyColumn(
+            // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 10.dp),
+                .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            // todo: think about adding a top and bottom fade
         ) {
-            itemsIndexed(modList) { _, item ->
+            itemsIndexed(modList) { _, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
                 MCard(item.title, item.summary, item.modPhoto)
             }
-//            MCard(modTwo.title, modTwo.summary, modTwo.modPhoto)
-//            MCard(modThree.title, modThree.summary, modThree.modPhoto)
-//            MCard(modFour.title, modFour.summary, modFour.modPhoto)
         }
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun MCard(mCString: String, summary: String, picInt: Int) {
     var expanded by remember { mutableStateOf(false) }
@@ -99,29 +104,45 @@ fun MCard(mCString: String, summary: String, picInt: Int) {
         }
     }
 }
-//}
 
+@ExperimentalAnimationApi
 @Composable
 fun ModuleCardBody(mSummary: String, picInt: Int, isExpanded: Boolean) {
     Row(
         modifier = Modifier
             .wrapContentSize()
     ) {
-        MPic(picInt)
+        MPic(picInt, isExpanded)
         ModuleDetails(mSummary, isExpanded)
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
-fun MPic(picInt: Int) {
-    Image(
-        painter = painterResource(id = picInt),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(96.dp)
-            .clip(RoundedCornerShape(10.dp)),
-        contentDescription = "Stanley walking strong"
-    )
+fun MPic(picInt: Int, isExpanded: Boolean) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) { // https://stackoverflow.com/questions/60479567/how-to-center-elements-inside-a-column-in-jetpack-compose
+        Image(
+            painter = painterResource(id = picInt),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(96.dp)
+                .clip(RoundedCornerShape(10.dp)),
+            contentDescription = "Stanley walking strong"
+        )
+        AnimatedVisibility (isExpanded) {
+            Image(
+                painter = painterResource(id = R.drawable.doc_pic),
+                contentDescription = "Document Icon",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .size(48.dp)
+                    .fillMaxWidth(),
+                alignment = Alignment.TopCenter,
+            )
+        }
+
+    }
 }
 
 @Composable
@@ -156,6 +177,7 @@ fun DefaultPreview() {
     ToolbarWidget()
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ToolbarWidget() {
     // theme for our app.
