@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cfreesespuffs.github.kemoleseding">
+    package="com.cfreesespuffs.github.kemoleseding"
+    >
 
     <application
         android:allowBackup="true"
@@ -9,16 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KemoLeseding.AppBarOverlay">
-        <activity
-            android:name=".shadows"
-            android:exported="true"
-            android:label="@string/title_activity_shadows"
-            android:theme="@style/Theme.KemoLeseding.AppBarOverlay.NoActionBar" />
-        <activity
-            android:name=".shadowTest"
-            android:exported="true"
-            android:label="@string/title_activity_shadow_test"
-            android:theme="@style/Theme.KemoLeseding.AppBarOverlay.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

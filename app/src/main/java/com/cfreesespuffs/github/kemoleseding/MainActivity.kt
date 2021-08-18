@@ -10,11 +10,14 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -121,6 +124,7 @@ fun ModuleCardBody(mSummary: String, picInt: Int, isExpanded: Boolean) {
 @Composable
 fun MPic(picInt: Int, isExpanded: Boolean) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) { // https://stackoverflow.com/questions/60479567/how-to-center-elements-inside-a-column-in-jetpack-compose
+
         Image(
             painter = painterResource(id = picInt),
             contentScale = ContentScale.Crop,
@@ -129,19 +133,38 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                 .clip(RoundedCornerShape(10.dp)),
             contentDescription = "Stanley walking strong"
         )
-        AnimatedVisibility (isExpanded) {
+
+
+        AnimatedVisibility(isExpanded) {
+//            Button( modifier = Modifier.size(64.dp).padding(0.dp).size(64.dp),
+//                onClick = { /*TODO*/ },
+//                colors = ButtonDefaults.buttonColors(backgroundColor = kmlRed),
+//
+//            )
+//            {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.doc_pic),
+//                    "here",
+//                    modifier = Modifier.fillMaxSize()
+////                    tint = Color.Blue
+//                )
             Image(
                 painter = painterResource(id = R.drawable.doc_pic),
                 contentDescription = "Document Icon",
-                contentScale = ContentScale.Crop,
+//                    contentScale = ContentScale.Inside,
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(top = 8.dp)
                     .size(48.dp)
-                    .fillMaxWidth(),
-                alignment = Alignment.TopCenter,
+                    .fillMaxWidth()
+                    .clickable(
+                        enabled = true,
+                        onClickLabel = "This is a Document",
+                        onClick = {
+                            println("HELLO!")
+                        }),
+//                    alignment = Alignment.TopCenter,
             )
         }
-
     }
 }
 
