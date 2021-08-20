@@ -21,3 +21,8 @@ I have a film. It will be screened in <a href= "https://www.google.com/maps/plac
 ## The how?
 
 Jetpack Compose baby. And kotlin. Learning ahead, but narrowly scoped enough, that when going down rabbit holes I won't be so lost.
+
+### 2021-08-19 Update
+
+With help from [David Dicken](https://github.com/daviddicken) I was able to get a clickable picture (Modifier.clickable()). Next I wanted to use that icon to open a pdf via the user's choice of their PDF reader. Which has so far proven difficult. After bumbling around the web, the answers have slowly gravitated into the need to use and configure ContentProvider, and specifically its subclass FileProvider. Usually SO is __the place__ for these, but those results were passable at best, with very few questions, fewer answers, and with many of those using deprecated methods.
+But they did keep talking about having to use URIs in concert with a ContentProvider, so they did connect me to blogs that seem to have a full walk through and explanation for _Providers. [This](https://getaround.tech/android-fileprovider/) and [this](https://infinum.com/the-capsized-eight/share-files-using-fileprovider), and [this](https://techenum.com/learn-how-to-use-fileprovider-in-android-with-example/) are the ones I finally settled on to follow, so far.
