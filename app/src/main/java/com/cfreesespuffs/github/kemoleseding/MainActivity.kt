@@ -159,23 +159,26 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
 //                                File(context.filesDir, "pdfs/dDaysfFriends.pdf")
 //                            ) // + ".provider"
 
-//                            var inputStream: InputStream? = null
-//                            var outputStream: OutputStream? = null
+                            var inputStream: InputStream? = null
+                            var outputStream: OutputStream? = null
 
                             try {
 
                                 println(
                                     "This is the externalFilesDir: " +
                                     context
-                                        .getExternalFilesDir(null)
+                                        .filesDir
+//                                        .getExternalFilesDir(null)
                                         .toString()
                                 )
-                                val file = File("${context.getExternalFilesDir(null)}" + "/dDaysfFriends.pdf")
-//                                if (!file.exists()) {
-//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
-//                                    outputStream = FileOutputStream(file)
-//                                    copyFile(inputStream, outputStream)
-//                                }
+                                val file = File("${context.getExternalFilesDir("kmlpdfFromFile")}" + "/dDaysfFriends.pdf")
+//                                val file = File("${context.getExternalFilesDir(\"pdfs_ext)\"}" + "/kml_pdfs/dDaysfFriends.pdf")
+                                if (!file.exists()) {
+                                    println("in file doesn't exist block")
+                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+                                    outputStream = FileOutputStream(file)
+                                    copyFile(inputStream, outputStream)
+                                }
 
                                 println("here")
 
@@ -197,23 +200,11 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                             } catch (ex: ActivityNotFoundException) {
                                 println(ex.message)
                             } finally {
-//                                inputStream?.close()
-//                                outputStream?.flush()
-//                                outputStream?.close()
+                                inputStream?.close()
+                                outputStream?.flush()
+                                outputStream?.close()
                             }
-
-//                            val uri = FileProvider.getUriForFile(context, "com.cfreesespuffs.github.kemoleseding" + ".provider", File(context.filesDir, "dDaysfFriends.pdf")) // + ".provider"
-//                            val pdfIntent = Intent(Intent.ACTION_VIEW)
-//                            pdfIntent
-//                            val uri = Uri.fromFile(File("pdfs/dDaysfFriends.pdf"))
-//                            val uri = Uri.parse("content://res/pdfs/dDaysfFriends.pdf")
-//                            val pdfIntent = Intent(Intent.ACTION_VIEW)
-//                                .setDataAndType(uri, "application/pdf")
-//                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                .setAction(Intent.ACTION_OPEN_DOCUMENT)
-//                                startActivity(context, pdfIntent, null)
-                            println("HELLO!")
+                            println("File copy and view in action")
                         })
             )
         }
