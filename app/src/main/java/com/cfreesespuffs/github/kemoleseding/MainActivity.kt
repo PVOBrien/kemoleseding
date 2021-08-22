@@ -1,7 +1,9 @@
 package com.cfreesespuffs.github.kemoleseding
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -34,17 +36,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
-import java.io.File
+import java.io.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { // TODO: test
+        setContent {
             ToolbarWidget()
         }
     }
@@ -126,7 +127,8 @@ fun ModuleCardBody(mSummary: String, picInt: Int, isExpanded: Boolean) {
 @Composable
 fun MPic(picInt: Int, isExpanded: Boolean) {
 
-    val context = LocalContext.current // https://stackoverflow.com/questions/64994507/is-there-a-way-to-open-a-webpage-on-click-of-iconbutton-from-the-topappbar-in-a
+    val context =
+        LocalContext.current // https://stackoverflow.com/questions/64994507/is-there-a-way-to-open-a-webpage-on-click-of-iconbutton-from-the-topappbar-in-a
     Column(horizontalAlignment = Alignment.CenterHorizontally) { // https://stackoverflow.com/questions/60479567/how-to-center-elements-inside-a-column-in-jetpack-compose
 
         Image(
@@ -150,17 +152,67 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
-                            val uri = FileProvider.getUriForFile(context, "com.cfreesespuffs.github.kemoleseding" + ".provider", File(context.filesDir, "dDaysfFriends.pdf")) // + ".provider"
-                            val pdfIntent = Intent(Intent.ACTION_VIEW)
-                            pdfIntent
+
+//                            val uri = FileProvider.getUriForFile(
+//                                context,
+//                                "com.cfreesespuffs.github.kemoleseding" + ".provider",
+//                                File(context.filesDir, "pdfs/dDaysfFriends.pdf")
+//                            ) // + ".provider"
+
+//                            var inputStream: InputStream? = null
+//                            var outputStream: OutputStream? = null
+
+                            try {
+
+                                println(
+                                    "This is the externalFilesDir: " +
+                                    context
+                                        .getExternalFilesDir(null)
+                                        .toString()
+                                )
+                                val file = File("${context.getExternalFilesDir(null)}" + "/dDaysfFriends.pdf")
+//                                if (!file.exists()) {
+//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+//                                    outputStream = FileOutputStream(file)
+//                                    copyFile(inputStream, outputStream)
+//                                }
+
+                                println("here")
+
+                                val uri = FileProvider.getUriForFile(
+                                    context,
+                                    "com.cfreesespuffs.github.kemoleseding.provider",
+                                    file
+                                )
+                                val intent = Intent(Intent.ACTION_VIEW) // make change
+                                    .setDataAndType(uri, "application/pdf")
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+
+                                context.startActivity(intent)
+
+                            } catch (ex: IOException) {
+                                println("IOException " + ex.message)
+                            } catch (ex: ActivityNotFoundException) {
+                                println(ex.message)
+                            } finally {
+//                                inputStream?.close()
+//                                outputStream?.flush()
+//                                outputStream?.close()
+                            }
+
+//                            val uri = FileProvider.getUriForFile(context, "com.cfreesespuffs.github.kemoleseding" + ".provider", File(context.filesDir, "dDaysfFriends.pdf")) // + ".provider"
+//                            val pdfIntent = Intent(Intent.ACTION_VIEW)
+//                            pdfIntent
 //                            val uri = Uri.fromFile(File("pdfs/dDaysfFriends.pdf"))
 //                            val uri = Uri.parse("content://res/pdfs/dDaysfFriends.pdf")
 //                            val pdfIntent = Intent(Intent.ACTION_VIEW)
-                                .setDataAndType(uri, "application/pdf")
+//                                .setDataAndType(uri, "application/pdf")
 //                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 //                                .setAction(Intent.ACTION_OPEN_DOCUMENT)
-                                startActivity(context, pdfIntent, null)
+//                                startActivity(context, pdfIntent, null)
                             println("HELLO!")
                         })
             )
@@ -169,7 +221,7 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
 }
 
 @Composable
-fun DocumentSelection(){
+fun DocumentSelection() {
 
 }
 
@@ -251,5 +303,14 @@ fun ToolbarWidget() {
         })
 }
 
-
+private fun copyFile(input: InputStream, output: OutputStream) {
+    println("in copyfile")
+    val buffer = ByteArray(1024)
+    var read: Int = input.read(buffer)
+    while (read != -1) {
+        output.write(buffer, 0, read)
+        read = input.read(buffer)
+        println(buffer)
+    }
+}
 // "Trash" below

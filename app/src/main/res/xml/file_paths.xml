@@ -5,6 +5,10 @@
         name="pdfs"
         path="pdfs/" />
 
+    <external-path
+        name="pdfs_ext"
+        path="." />
+
 </paths>
 
 <!--    https://developer.android.com/training/secure-file-sharing/setup-sharing-->
