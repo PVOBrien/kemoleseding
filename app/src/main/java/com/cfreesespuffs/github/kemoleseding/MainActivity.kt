@@ -1,14 +1,12 @@
 package com.cfreesespuffs.github.kemoleseding
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
@@ -16,6 +14,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -44,6 +43,7 @@ import java.io.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             ToolbarWidget()
@@ -72,8 +72,13 @@ fun KemoLesedingTheme() {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             // todo: think about adding a top and bottom fade
         ) {
-            itemsIndexed(modList) { _, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
-                MCard(item.title, item.summary, item.modPhoto)
+            itemsIndexed(modList) { itemCount, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
+                MCard(
+                    item.title,
+                    item.summary,
+                    item.modPhoto,
+                    itemCount
+                ) // itemCount is the index position of *that* item.
             }
         }
     }
@@ -81,7 +86,8 @@ fun KemoLesedingTheme() {
 
 @ExperimentalAnimationApi
 @Composable
-fun MCard(mCString: String, summary: String, picInt: Int) {
+fun MCard(mCString: String, summary: String, picInt: Int, cardCount: Int) {
+    println("the cardCount: $cardCount")
     var expanded by remember { mutableStateOf(false) }
 // https://joebirch.co/android/exploring-jetpack-compose-card/
     Button(
@@ -127,6 +133,10 @@ fun ModuleCardBody(mSummary: String, picInt: Int, isExpanded: Boolean) {
 @Composable
 fun MPic(picInt: Int, isExpanded: Boolean) {
 
+    var docsExpanded by remember { mutableStateOf(false) }
+
+    var numbersList: List<Int> = listOf(1, 2, 3, 4)
+
     val context =
         LocalContext.current // https://stackoverflow.com/questions/64994507/is-there-a-way-to-open-a-webpage-on-click-of-iconbutton-from-the-topappbar-in-a
     Column(horizontalAlignment = Alignment.CenterHorizontally) { // https://stackoverflow.com/questions/60479567/how-to-center-elements-inside-a-column-in-jetpack-compose
@@ -152,53 +162,50 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
-
-                            var inputStream: InputStream? = null
-                            var outputStream: OutputStream? = null
-
-                            try {
-                                val file =
-                                    File("${context.getExternalFilesDir("kmlpdfFromFile")}" + "/daysfriends.pdf") // "kmlpdfFromFile"
-                                if (!file.exists()) {
-                                    println("in file doesn't exist block")
-//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
-                                    inputStream =
-                                        context.resources.openRawResource(R.raw.daysfriends)
-                                    outputStream = FileOutputStream(file)
-                                    copyFile(inputStream, outputStream)
-                                }
-
-                                val uri = FileProvider.getUriForFile(
-                                    context,
-                                    "com.cfreesespuffs.github.kemoleseding.provider",
-                                    file
-                                )
-
-                                println(uri.toString())
-                                val pdfToOpen = Intent(Intent.ACTION_VIEW)
-                                    .setDataAndType(uri, context.contentResolver.getType(uri)) // context.contentResolver.getType(<file>) is the best way to get the MIME type for any file, as it requires no work on coder's part
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-
-                                val intent = Intent.createChooser(
-                                    pdfToOpen,
-                                    "Open Pdf using..."
-                                )
-                                context.startActivity(intent)
-
-                            } catch (ex: IOException) {
-                                println("IOException " + ex.message)
-                            } catch (ex: ActivityNotFoundException) {
-                                println(ex.message)
-                            } finally {
-                                inputStream?.close()
-                                outputStream?.flush()
-                                outputStream?.close()
-                            }
-                            println("File copy and/or view in action")
+                            docsExpanded = !docsExpanded
+                            println("CLICK PIC")
                         })
+//                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
             )
+        }
+
+        AnimatedVisibility( // TODO: call the documents from farther down the compositions https://developer.android.com/jetpack/compose/state
+            docsExpanded,
+            enter = slideInHorizontally(),
+            exit = slideOutVertically()
+        ) {
+            LazyRow(
+                modifier = Modifier
+                    .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
+            )
+            {
+                itemsIndexed(numbersList) { _, item ->
+                    Text(text = item.toString())
+                }
+            }
+        }
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun docAbove(isVisible: Boolean) {
+
+    var numbersList: List<Int> = listOf(1, 2, 3, 4)
+
+    AnimatedVisibility(
+        isVisible,
+        enter = slideInHorizontally(),
+        exit = slideOutVertically()
+    ) {
+        LazyRow(
+            modifier = Modifier
+                .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
+        )
+        {
+            itemsIndexed(numbersList) { _, item ->
+                Text(text = item.toString())
+            }
         }
     }
 }
@@ -281,8 +288,54 @@ fun ToolbarWidget() {
         })
 }
 
-private fun openFile() {
+private fun openFile(theContext: Context) { // TODO: add addtl variables for which files.
+    var inputStream: InputStream? = null
+    var outputStream: OutputStream? = null
 
+    try {
+        val file =
+            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/daysfriends.pdf") // "kmlpdfFromFile"
+        if (!file.exists()) {
+            println("in file doesn't exist block")
+//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+            inputStream =
+                theContext.resources.openRawResource(R.raw.daysfriends)
+            outputStream = FileOutputStream(file)
+            copyFile(inputStream, outputStream)
+        }
+
+        val uri = FileProvider.getUriForFile(
+            theContext,
+            "com.cfreesespuffs.github.kemoleseding.provider",
+            file
+        )
+
+        println(uri.toString())
+        val pdfToOpen = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(
+                uri,
+                theContext.contentResolver.getType(uri)
+            ) // context.contentResolver.getType(<file>) is the best way to get the MIME type for any file, as it requires no work on coder's part
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+
+        val intent = Intent.createChooser(
+            pdfToOpen,
+            "Open Pdf using..."
+        )
+        theContext.startActivity(intent)
+
+    } catch (ex: IOException) {
+        println("IOException " + ex.message)
+    } catch (ex: ActivityNotFoundException) {
+        println(ex.message)
+    } finally {
+        inputStream?.close()
+        outputStream?.flush()
+        outputStream?.close()
+    }
+    println("File copy and/or view in action")
 }
 
 private fun copyFile(input: InputStream, output: OutputStream) {
@@ -295,4 +348,3 @@ private fun copyFile(input: InputStream, output: OutputStream) {
         println(buffer)
     }
 }
-// "Trash" below
