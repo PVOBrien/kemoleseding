@@ -146,53 +146,45 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                 contentDescription = "Document Icon",
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .size(48.dp)
+                    .size(40.dp)
                     .fillMaxWidth()
                     .clickable(
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
 
-//                            val uri = FileProvider.getUriForFile(
-//                                context,
-//                                "com.cfreesespuffs.github.kemoleseding" + ".provider",
-//                                File(context.filesDir, "pdfs/dDaysfFriends.pdf")
-//                            ) // + ".provider"
-
                             var inputStream: InputStream? = null
                             var outputStream: OutputStream? = null
 
                             try {
-
-                                println(
-                                    "This is the externalFilesDir: " +
-                                    context
-                                        .filesDir
-//                                        .getExternalFilesDir(null)
-                                        .toString()
-                                )
-                                val file = File("${context.getExternalFilesDir("kmlpdfFromFile")}" + "/dDaysfFriends.pdf")
-//                                val file = File("${context.getExternalFilesDir(\"pdfs_ext)\"}" + "/kml_pdfs/dDaysfFriends.pdf")
+                                val file =
+                                    File("${context.getExternalFilesDir("kmlpdfFromFile")}" + "/daysfriends.pdf") // "kmlpdfFromFile"
                                 if (!file.exists()) {
                                     println("in file doesn't exist block")
-                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+                                    inputStream =
+                                        context.resources.openRawResource(R.raw.daysfriends)
                                     outputStream = FileOutputStream(file)
                                     copyFile(inputStream, outputStream)
                                 }
-
-                                println("here")
 
                                 val uri = FileProvider.getUriForFile(
                                     context,
                                     "com.cfreesespuffs.github.kemoleseding.provider",
                                     file
                                 )
-                                val intent = Intent(Intent.ACTION_VIEW) // make change
-                                    .setDataAndType(uri, "application/pdf")
+
+                                println(uri.toString())
+                                val pdfToOpen = Intent(Intent.ACTION_VIEW)
+                                    .setDataAndType(uri, context.contentResolver.getType(uri)) // context.contentResolver.getType(<file>) is the best way to get the MIME type for any file, as it requires no work on coder's part
                                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                     .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
 
+                                val intent = Intent.createChooser(
+                                    pdfToOpen,
+                                    "Open Pdf using..."
+                                )
                                 context.startActivity(intent)
 
                             } catch (ex: IOException) {
@@ -204,16 +196,11 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                                 outputStream?.flush()
                                 outputStream?.close()
                             }
-                            println("File copy and view in action")
+                            println("File copy and/or view in action")
                         })
             )
         }
     }
-}
-
-@Composable
-fun DocumentSelection() {
-
 }
 
 @Composable
@@ -292,6 +279,10 @@ fun ToolbarWidget() {
         }, content = {
             KemoLesedingTheme()
         })
+}
+
+private fun openFile() {
+
 }
 
 private fun copyFile(input: InputStream, output: OutputStream) {
