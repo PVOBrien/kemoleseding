@@ -233,13 +233,14 @@ fun MPic(
 fun docAbove(
     isVisible: Boolean,
     onFileShowChange: (Boolean) -> Unit,
-    modList: List<Module>,
-    whichMod: Int
+    docDetails: List<docDetails>?,
+//    modList: List<Module>,
+//    whichMod: Int
 ) {
 
     val context = LocalContext.current
     var numbersList: List<Int> = listOf(1, 2, 3, 4)
-    println("this is the current mod clicked: $whichMod")
+    println("this is the current docDetail file path: ${docDetails?.get(0)}")
     AnimatedVisibility(
         isVisible,
         enter = slideInVertically(),
@@ -282,9 +283,10 @@ fun docAbove(
                                         enabled = true,
                                         onClickLabel = "This is a Document",
                                         onClick = {
-                                            var quickBool: Boolean = false
-                                            onFileShowChange(!quickBool)
+//                                            var quickBool: Boolean = false
+//                                            onFileShowChange(!quickBool)
                                             println("CLICK PIC")
+                                            openFile(context, "daysfriends")
                                         })
 //                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
                             )
@@ -397,7 +399,11 @@ fun ToolbarWidget() {
                 cardFile,
                 onFileShowChange = { fileShow = !fileShow },
                 onWhichModChange = { whichMod = it })
-            docAbove(fileShow, onFileShowChange = { fileShow = !fileShow }, modList, whichMod)
+            docAbove(
+                fileShow,
+                onFileShowChange = { fileShow = !fileShow },
+                modList[whichMod].docList
+            )
         })
 }
 
@@ -408,14 +414,15 @@ private fun openFile(
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
 
+    val theFile = "daysfriends"
+
     try {
         val file =
-            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/daysfriends.pdf") // "kmlpdfFromFile"
+            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$theFile.pdf") // "kmlpdfFromFile"
         if (!file.exists()) {
             println("in file doesn't exist block")
-//                                    inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
-            inputStream =
-                theContext.resources.openRawResource(R.raw.daysfriends)
+//          inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
+            inputStream = theContext.resources.openRawResource(R.raw.daysfriends)
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
         }
