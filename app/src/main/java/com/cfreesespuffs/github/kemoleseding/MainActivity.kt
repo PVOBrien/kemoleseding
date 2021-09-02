@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -53,12 +54,25 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalAnimationApi
 @Composable
-fun KemoLesedingTheme() {
+fun KemoLesedingTheme(fileShow: Boolean, cardFile: Int, onFileShowChange: (Boolean) -> Unit) {
     // A surface container using the 'background' color from the theme
     Surface(
         color = kmlLightBlue,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(
+                enabled = true,
+                onClick = {
+                    println("onSurface")
+                    onFileShowChange(!fileShow)
+                }
+            )
     ) {
+
+//        var (cardFile, setCardFile) = remember { mutableStateOf(0)}
+//        var fileShow by remember { mutableStateOf(false) }
+//        var cardFile by remember { mutableStateOf(0) }
+
         val modList = listOf(modOne, modTwo, modThree, modFour)
         Text(
             text = "Click each for additional details",
@@ -77,8 +91,11 @@ fun KemoLesedingTheme() {
                     item.title,
                     item.summary,
                     item.modPhoto,
-                    itemCount
-                ) // itemCount is the index position of *that* item.
+                    itemCount, // itemCount is the index position of *the* item.
+                    fileShow,
+                    cardFile,
+                    onFileShowChange
+                )
             }
         }
     }
@@ -86,7 +103,15 @@ fun KemoLesedingTheme() {
 
 @ExperimentalAnimationApi
 @Composable
-fun MCard(mCString: String, summary: String, picInt: Int, cardCount: Int) {
+fun MCard(
+    mCString: String,
+    summary: String,
+    picInt: Int,
+    cardCount: Int,
+    fileShow: Boolean,
+    cardFile: Int,
+    onFileShowChange: (Boolean) -> Unit
+) {
     println("the cardCount: $cardCount")
     var expanded by remember { mutableStateOf(false) }
 // https://joebirch.co/android/exploring-jetpack-compose-card/
@@ -112,26 +137,49 @@ fun MCard(mCString: String, summary: String, picInt: Int, cardCount: Int) {
                 fontWeight = FontWeight.Bold,
                 color = Color.White // otherwise button text defaults to Black
             )
-            ModuleCardBody(summary, picInt, expanded)
+            ModuleCardBody(
+                summary,
+                picInt,
+                expanded,
+                cardCount,
+                fileShow,
+                cardFile,
+                onFileShowChange
+            )
         }
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun ModuleCardBody(mSummary: String, picInt: Int, isExpanded: Boolean) {
+fun ModuleCardBody(
+    mSummary: String,
+    picInt: Int,
+    isExpanded: Boolean,
+    cardCount: Int,
+    fileShow: Boolean,
+    cardFile: Int,
+    onFileShowChange: (Boolean) -> Unit
+) {
     Row(
         modifier = Modifier
             .wrapContentSize()
     ) {
-        MPic(picInt, isExpanded)
+        MPic(picInt, isExpanded, cardCount, fileShow, cardFile, onFileShowChange)
         ModuleDetails(mSummary, isExpanded)
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun MPic(picInt: Int, isExpanded: Boolean) {
+fun MPic(
+    picInt: Int,
+    isExpanded: Boolean,
+    ofCard: Int,
+    fileShow: Boolean,
+    cardFile: Int,
+    onFileShowChange: (Boolean) -> Unit
+) {
 
     var docsExpanded by remember { mutableStateOf(false) }
 
@@ -162,49 +210,78 @@ fun MPic(picInt: Int, isExpanded: Boolean) {
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
-                            docsExpanded = !docsExpanded
+//                            fileShow = !fileShow
+                            var quickBool: Boolean = false
+                            onFileShowChange(!quickBool)
                             println("CLICK PIC")
                         })
 //                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
             )
         }
 
-        AnimatedVisibility( // TODO: call the documents from farther down the compositions https://developer.android.com/jetpack/compose/state
-            docsExpanded,
-            enter = slideInHorizontally(),
-            exit = slideOutVertically()
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
-            )
-            {
-                itemsIndexed(numbersList) { _, item ->
-                    Text(text = item.toString())
-                }
-            }
-        }
+//        AnimatedVisibility( // TODO: call the documents from farther down the compositions https://developer.android.com/jetpack/compose/state
+//            docsExpanded,
+//            enter = slideInHorizontally(),
+//            exit = slideOutVertically()
+//        ) {
+//            LazyRow(
+//                modifier = Modifier
+//                    .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
+//            )
+//            {
+//                itemsIndexed(numbersList) { _, item ->
+//                    Text(text = item.toString())
+//                }
+//            }
+//        }
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun docAbove(isVisible: Boolean) {
+fun docAbove(isVisible: Boolean, onFileShowChange: (Boolean) -> Unit) {
 
     var numbersList: List<Int> = listOf(1, 2, 3, 4)
+    val density = LocalDensity.current
 
     AnimatedVisibility(
         isVisible,
-        enter = slideInHorizontally(),
-        exit = slideOutVertically()
+        enter = slideInVertically(), // initialOffsetY = { with(density) { -400.dp.roundToPx() } }
+        exit = slideOutVertically(),
     ) {
-        LazyRow(
-            modifier = Modifier
-                .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
-        )
-        {
-            itemsIndexed(numbersList) { _, item ->
-                Text(text = item.toString())
+        Column(
+            modifier = Modifier.fillMaxSize(), // THIS CENTERS STUFF.
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+                        LazyRow(
+                modifier = Modifier
+//                    .padding(
+//                        top = 280.dp,
+//                        start = 200.dp,
+//                        bottom = 18.dp,
+//                        end = 10.dp
+//                    ) // top = 24.dp,
+                    .clickable(
+                        enabled = true,
+                        onClickLabel = "Show docs or not",
+                        onClick = {
+                            onFileShowChange(!isVisible)
+                        }
+                    ),
+
+//            verticalAlignment = Alignment.CenterVertically, // https://stackoverflow.com/questions/64480846/center-composable-in-jetpack-compose doesn't do what I want
+//            horizontalArrangement = Arrangement.Center
+            )
+            {
+                itemsIndexed(numbersList) { _, item ->
+
+                    Text(text = item.toString())
+                }
+            }
+            Button(onClick = { onFileShowChange(!isVisible) })
+            {
+                Text(text = "Close")
             }
         }
     }
@@ -284,7 +361,12 @@ fun ToolbarWidget() {
                 elevation = 6.dp
             )
         }, content = {
-            KemoLesedingTheme()
+            var fileShow by remember { mutableStateOf(false) }
+            var cardFile by remember { mutableStateOf(0) }
+
+
+            KemoLesedingTheme(fileShow, cardFile, onFileShowChange = { fileShow = !fileShow })
+            docAbove(fileShow, onFileShowChange = { fileShow = !fileShow })
         })
 }
 
