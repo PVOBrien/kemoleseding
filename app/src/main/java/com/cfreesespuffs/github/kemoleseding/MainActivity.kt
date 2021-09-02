@@ -69,18 +69,13 @@ fun KemoLesedingTheme(fileShow: Boolean, cardFile: Int, onFileShowChange: (Boole
             )
     ) {
 
-//        var (cardFile, setCardFile) = remember { mutableStateOf(0)}
-//        var fileShow by remember { mutableStateOf(false) }
-//        var cardFile by remember { mutableStateOf(0) }
-
         val modList = listOf(modOne, modTwo, modThree, modFour)
         Text(
             text = "Click each for additional details",
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
-        LazyColumn(
-            // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
+        LazyColumn( // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
             modifier = Modifier
                 .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -111,10 +106,9 @@ fun MCard(
     fileShow: Boolean,
     cardFile: Int,
     onFileShowChange: (Boolean) -> Unit
-) {
+) { // https://joebirch.co/android/exploring-jetpack-compose-card/
     println("the cardCount: $cardCount")
     var expanded by remember { mutableStateOf(false) }
-// https://joebirch.co/android/exploring-jetpack-compose-card/
     Button(
         // to be used to show/animate https://developer.android.com/jetpack/compose/animation
         onClick = { expanded = !expanded },
@@ -218,22 +212,6 @@ fun MPic(
 //                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
             )
         }
-
-//        AnimatedVisibility( // TODO: call the documents from farther down the compositions https://developer.android.com/jetpack/compose/state
-//            docsExpanded,
-//            enter = slideInHorizontally(),
-//            exit = slideOutVertically()
-//        ) {
-//            LazyRow(
-//                modifier = Modifier
-//                    .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp)
-//            )
-//            {
-//                itemsIndexed(numbersList) { _, item ->
-//                    Text(text = item.toString())
-//                }
-//            }
-//        }
     }
 }
 
