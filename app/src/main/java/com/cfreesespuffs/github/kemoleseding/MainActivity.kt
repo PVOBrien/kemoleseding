@@ -26,7 +26,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +39,7 @@ import androidx.core.content.FileProvider
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
+import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 import java.io.*
 
 class MainActivity : ComponentActivity() {
@@ -54,7 +54,13 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalAnimationApi
 @Composable
-fun KemoLesedingTheme(fileShow: Boolean, cardFile: Int, onFileShowChange: (Boolean) -> Unit) {
+fun KemoLesedingTheme(
+    modlist: List<Module>,
+    fileShow: Boolean,
+    cardFile: Int,
+    onFileShowChange: (Boolean) -> Unit,
+    onWhichModChange: (Int) -> Unit
+) {
     // A surface container using the 'background' color from the theme
     Surface(
         color = kmlLightBlue,
@@ -69,19 +75,20 @@ fun KemoLesedingTheme(fileShow: Boolean, cardFile: Int, onFileShowChange: (Boole
             )
     ) {
 
-        val modList = listOf(modOne, modTwo, modThree, modFour)
+//        val modList = listOf(modOne, modTwo, modThree, modFour)
         Text(
             text = "Click each for additional details",
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
-        LazyColumn( // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
+        LazyColumn(
+            // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
             modifier = Modifier
                 .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             // todo: think about adding a top and bottom fade
         ) {
-            itemsIndexed(modList) { itemCount, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
+            itemsIndexed(modlist) { itemCount, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
                 MCard(
                     item.title,
                     item.summary,
@@ -89,7 +96,8 @@ fun KemoLesedingTheme(fileShow: Boolean, cardFile: Int, onFileShowChange: (Boole
                     itemCount, // itemCount is the index position of *the* item.
                     fileShow,
                     cardFile,
-                    onFileShowChange
+                    onFileShowChange,
+                    onWhichModChange
                 )
             }
         }
@@ -105,7 +113,8 @@ fun MCard(
     cardCount: Int,
     fileShow: Boolean,
     cardFile: Int,
-    onFileShowChange: (Boolean) -> Unit
+    onFileShowChange: (Boolean) -> Unit,
+    onWhichModChange: (Int) -> Unit
 ) { // https://joebirch.co/android/exploring-jetpack-compose-card/
     println("the cardCount: $cardCount")
     var expanded by remember { mutableStateOf(false) }
@@ -138,7 +147,8 @@ fun MCard(
                 cardCount,
                 fileShow,
                 cardFile,
-                onFileShowChange
+                onFileShowChange,
+                onWhichModChange
             )
         }
     }
@@ -153,13 +163,14 @@ fun ModuleCardBody(
     cardCount: Int,
     fileShow: Boolean,
     cardFile: Int,
-    onFileShowChange: (Boolean) -> Unit
+    onFileShowChange: (Boolean) -> Unit,
+    onWhichModChange: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier
             .wrapContentSize()
     ) {
-        MPic(picInt, isExpanded, cardCount, fileShow, cardFile, onFileShowChange)
+        MPic(picInt, isExpanded, cardCount, fileShow, cardFile, onFileShowChange, onWhichModChange)
         ModuleDetails(mSummary, isExpanded)
     }
 }
@@ -172,7 +183,8 @@ fun MPic(
     ofCard: Int,
     fileShow: Boolean,
     cardFile: Int,
-    onFileShowChange: (Boolean) -> Unit
+    onFileShowChange: (Boolean) -> Unit,
+    onWhichModChange: (Int) -> Unit
 ) {
 
     var docsExpanded by remember { mutableStateOf(false) }
@@ -208,6 +220,7 @@ fun MPic(
                             var quickBool: Boolean = false
                             onFileShowChange(!quickBool)
                             println("CLICK PIC")
+                            onWhichModChange(ofCard)
                         })
 //                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
             )
@@ -217,14 +230,19 @@ fun MPic(
 
 @ExperimentalAnimationApi
 @Composable
-fun docAbove(isVisible: Boolean, onFileShowChange: (Boolean) -> Unit) {
+fun docAbove(
+    isVisible: Boolean,
+    onFileShowChange: (Boolean) -> Unit,
+    modList: List<Module>,
+    whichMod: Int
+) {
 
+    val context = LocalContext.current
     var numbersList: List<Int> = listOf(1, 2, 3, 4)
-    val density = LocalDensity.current
-
+    println("this is the current mod clicked: $whichMod")
     AnimatedVisibility(
         isVisible,
-        enter = slideInVertically(), // initialOffsetY = { with(density) { -400.dp.roundToPx() } }
+        enter = slideInVertically(),
         exit = slideOutVertically(),
     ) {
         Column(
@@ -232,34 +250,63 @@ fun docAbove(isVisible: Boolean, onFileShowChange: (Boolean) -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-                        LazyRow(
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-//                    .padding(
-//                        top = 280.dp,
-//                        start = 200.dp,
-//                        bottom = 18.dp,
-//                        end = 10.dp
-//                    ) // top = 24.dp,
-                    .clickable(
-                        enabled = true,
-                        onClickLabel = "Show docs or not",
-                        onClick = {
-                            onFileShowChange(!isVisible)
+                    .background(
+                        color = kmlYellow,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+            ) {
+                LazyRow(
+                    modifier = Modifier
+                        .clickable(
+                            enabled = true,
+                            onClickLabel = "Show docs or not",
+                            onClick = {
+                                onFileShowChange(!isVisible)
+                            }
+                        )
+                        .background(color = kmlYellow, shape = RoundedCornerShape(8.dp)),
+                )
+                {
+                    itemsIndexed(numbersList) { _, item ->
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.doc_pic),
+                                contentDescription = "Document Icon",
+                                modifier = Modifier
+                                    .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 6.dp)
+                                    .size(32.dp)
+                                    .clickable(
+                                        enabled = true,
+                                        onClickLabel = "This is a Document",
+                                        onClick = {
+                                            var quickBool: Boolean = false
+                                            onFileShowChange(!quickBool)
+                                            println("CLICK PIC")
+                                        })
+//                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
+                            )
+                            Text(
+                                text = "File $item",
+                                modifier = Modifier.padding(
+                                    start = 12.dp,
+                                    end = 12.dp,
+                                    bottom = 8.dp
+                                )
+                            )
                         }
-                    ),
-
-//            verticalAlignment = Alignment.CenterVertically, // https://stackoverflow.com/questions/64480846/center-composable-in-jetpack-compose doesn't do what I want
-//            horizontalArrangement = Arrangement.Center
-            )
-            {
-                itemsIndexed(numbersList) { _, item ->
-
-                    Text(text = item.toString())
+                    }
                 }
-            }
-            Button(onClick = { onFileShowChange(!isVisible) })
-            {
-                Text(text = "Close")
+                Button(
+                    modifier = Modifier.padding(all = 12.dp),
+                    onClick = { onFileShowChange(!isVisible) },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = kmlLightBlue), // https://stackoverflow.com/questions/64376333/background-color-on-button-in-jetpack-compose
+                )
+                {
+                    Text(text = "Close")
+                }
             }
         }
     }
@@ -341,14 +388,23 @@ fun ToolbarWidget() {
         }, content = {
             var fileShow by remember { mutableStateOf(false) }
             var cardFile by remember { mutableStateOf(0) }
+            val modList = listOf(modOne, modTwo, modThree, modFour)
+            var whichMod by remember { mutableStateOf(0) }
 
-
-            KemoLesedingTheme(fileShow, cardFile, onFileShowChange = { fileShow = !fileShow })
-            docAbove(fileShow, onFileShowChange = { fileShow = !fileShow })
+            KemoLesedingTheme(
+                modList,
+                fileShow,
+                cardFile,
+                onFileShowChange = { fileShow = !fileShow },
+                onWhichModChange = { whichMod = it })
+            docAbove(fileShow, onFileShowChange = { fileShow = !fileShow }, modList, whichMod)
         })
 }
 
-private fun openFile(theContext: Context) { // TODO: add addtl variables for which files.
+private fun openFile(
+    theContext: Context,
+    theFile: String
+) { // TODO: add addtl variables for which files.
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
 
