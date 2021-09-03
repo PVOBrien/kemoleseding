@@ -189,7 +189,6 @@ fun MPic(
 ) {
 
     var docsExpanded by remember { mutableStateOf(false) }
-
     var numbersList: List<Int> = listOf(1, 2, 3, 4)
 
     val context =
@@ -207,7 +206,6 @@ fun MPic(
 
         AnimatedVisibility(isExpanded) {
             Image(
-//                painter = painterResource(id = R.drawable.doc_pic),
                 painter = painterResource(id = R.drawable.folder),
                 contentDescription = "Document Icon",
                 modifier = Modifier
@@ -218,13 +216,11 @@ fun MPic(
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
-//                            fileShow = !fileShow
                             var quickBool: Boolean = false
                             onFileShowChange(!quickBool)
                             println("CLICK PIC")
                             onWhichModChange(ofCard)
                         })
-//                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
             )
         }
     }
@@ -232,16 +228,13 @@ fun MPic(
 
 @ExperimentalAnimationApi
 @Composable
-fun docAbove(
+fun DocAbove(
     isVisible: Boolean,
     onFileShowChange: (Boolean) -> Unit,
     passedDocDetails: List<docDetails>,
-//    modList: List<Module>,
-//    whichMod: Int
 ) {
     val context = LocalContext.current
-    var numbersList: List<Int> = listOf(1, 2, 3, 4)
-    println("this is the current docDetail file path: ${passedDocDetails?.get(0)?.docName}")
+    println("this is the current docDetail file path: ${passedDocDetails[0].docName}")
     AnimatedVisibility(
         isVisible,
         enter = slideInVertically(),
@@ -272,7 +265,6 @@ fun docAbove(
                         .background(color = kmlYellow, shape = RoundedCornerShape(8.dp)),
                 )
                 {
-                    val allData = passedDocDetails.toList() // https://stackoverflow.com/questions/46846025/how-to-clone-or-copy-a-list-in-kotlin
                     items(passedDocDetails) { item ->
                         Column (horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
@@ -285,15 +277,12 @@ fun docAbove(
                                         enabled = true,
                                         onClickLabel = "This is a Document",
                                         onClick = {
-//                                            var quickBool: Boolean = false
-//                                            onFileShowChange(!quickBool)
-                                            println("CLICK PIC" + "${item.docName}")
+                                            println("CLICK PIC ${item.docName}")
                                             openFile(context, item.docName)
                                         })
-//                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
                             )
                             Text(
-                                text = "${item.docDescription}",
+                                text = item.docDescription,
                                 modifier = Modifier.padding(
                                     start = 12.dp,
                                     end = 12.dp,
@@ -401,7 +390,7 @@ fun ToolbarWidget() {
                 cardFile,
                 onFileShowChange = { fileShow = !fileShow },
                 onWhichModChange = { whichMod = it })
-            docAbove(
+            DocAbove(
                 fileShow,
                 onFileShowChange = { fileShow = !fileShow },
                 modList[whichMod].docList
@@ -412,7 +401,7 @@ fun ToolbarWidget() {
 private fun openFile(
     theContext: Context,
     theFile: String
-) { // TODO: add addtl variables for which files.
+) {
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
 
