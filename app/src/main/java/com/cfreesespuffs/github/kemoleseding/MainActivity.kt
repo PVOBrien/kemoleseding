@@ -15,6 +15,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -206,11 +207,12 @@ fun MPic(
 
         AnimatedVisibility(isExpanded) {
             Image(
-                painter = painterResource(id = R.drawable.doc_pic),
+//                painter = painterResource(id = R.drawable.doc_pic),
+                painter = painterResource(id = R.drawable.folder),
                 contentDescription = "Document Icon",
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .size(40.dp)
+                    .size(48.dp)
                     .fillMaxWidth()
                     .clickable(
                         enabled = true,
@@ -233,14 +235,13 @@ fun MPic(
 fun docAbove(
     isVisible: Boolean,
     onFileShowChange: (Boolean) -> Unit,
-    docDetails: List<docDetails>?,
+    passedDocDetails: List<docDetails>,
 //    modList: List<Module>,
 //    whichMod: Int
 ) {
-
     val context = LocalContext.current
     var numbersList: List<Int> = listOf(1, 2, 3, 4)
-    println("this is the current docDetail file path: ${docDetails?.get(0)}")
+    println("this is the current docDetail file path: ${passedDocDetails?.get(0)?.docName}")
     AnimatedVisibility(
         isVisible,
         enter = slideInVertically(),
@@ -271,27 +272,28 @@ fun docAbove(
                         .background(color = kmlYellow, shape = RoundedCornerShape(8.dp)),
                 )
                 {
-                    itemsIndexed(numbersList) { _, item ->
-                        Column {
+                    val allData = passedDocDetails.toList() // https://stackoverflow.com/questions/46846025/how-to-clone-or-copy-a-list-in-kotlin
+                    items(passedDocDetails) { item ->
+                        Column (horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
-                                painter = painterResource(id = R.drawable.doc_pic),
+                                painter = painterResource(item.picType),
                                 contentDescription = "Document Icon",
                                 modifier = Modifier
                                     .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 6.dp)
-                                    .size(32.dp)
+                                    .size(40.dp)
                                     .clickable(
                                         enabled = true,
                                         onClickLabel = "This is a Document",
                                         onClick = {
 //                                            var quickBool: Boolean = false
 //                                            onFileShowChange(!quickBool)
-                                            println("CLICK PIC")
-                                            openFile(context, "daysfriends")
+                                            println("CLICK PIC" + "${item.docName}")
+                                            openFile(context, item.docName)
                                         })
 //                        onClick = { openFile(context) }) // TODO: pass addtl variables for which files.
                             )
                             Text(
-                                text = "File $item",
+                                text = "${item.docDescription}",
                                 modifier = Modifier.padding(
                                     start = 12.dp,
                                     end = 12.dp,
@@ -414,15 +416,15 @@ private fun openFile(
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
 
-    val theFile = "daysfriends"
+//    val theFile = "daysfriends"
 
     try {
         val file =
             File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$theFile.pdf") // "kmlpdfFromFile"
         if (!file.exists()) {
             println("in file doesn't exist block")
-//          inputStream = context.assets.open("pdfs/dDaysfFriends.pdf")
-            inputStream = theContext.resources.openRawResource(R.raw.daysfriends)
+          inputStream = theContext.assets.open("pdfs/$theFile.pdf")
+//            inputStream = theContext.resources.openRawResource(R.raw.daysfriends)
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
         }
