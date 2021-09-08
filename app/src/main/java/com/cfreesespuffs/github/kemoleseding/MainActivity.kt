@@ -19,6 +19,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -76,7 +78,6 @@ fun KemoLesedingTheme(
             )
     ) {
 
-//        val modList = listOf(modOne, modTwo, modThree, modFour)
         Text(
             text = "Click each for additional details",
             modifier = Modifier.fillMaxWidth(),
@@ -121,7 +122,13 @@ fun MCard(
     var expanded by remember { mutableStateOf(false) }
     Button(
         // to be used to show/animate https://developer.android.com/jetpack/compose/animation
-        onClick = { expanded = !expanded },
+        onClick = {
+            if (fileShow) {
+                onFileShowChange(!fileShow)
+            } else {
+                expanded = !expanded
+            }
+        },
         colors = ButtonDefaults.buttonColors(backgroundColor = kmlRed), // https://stackoverflow.com/questions/64376333/background-color-on-button-in-jetpack-compose
         shape = RoundedCornerShape(16.dp), // doesn't seem to inherit the exact shape from above.
         modifier = Modifier.shadow(
@@ -189,7 +196,6 @@ fun MPic(
 ) {
 
     var docsExpanded by remember { mutableStateOf(false) }
-    var numbersList: List<Int> = listOf(1, 2, 3, 4)
 
     val context =
         LocalContext.current // https://stackoverflow.com/questions/64994507/is-there-a-way-to-open-a-webpage-on-click-of-iconbutton-from-the-topappbar-in-a
@@ -266,7 +272,7 @@ fun DocAbove(
                 )
                 {
                     items(passedDocDetails) { item ->
-                        Column (horizontalAlignment = Alignment.CenterHorizontally) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(
                                 painter = painterResource(item.picType),
                                 contentDescription = "Document Icon",
@@ -361,10 +367,17 @@ fun ToolbarWidget() {
                 navigationIcon = {
                     // navigation icon is use
                     // for drawer icon.
-                    IconButton(onClick = { }) {
+                    IconButton(
+                        enabled = false,
+                        onClick = { }) {
                         // below line is use to
                         // specify navigation icon.
-//                        Icon(Icons.Filled.Menu)
+                        Icon(
+                            painterResource(id = R.drawable.kmlmark),
+                            "hello",
+                            modifier = Modifier.padding(0.dp),
+                            kmlLightBlue
+                        )
                     }
                 },
                 // below line is use to give background color
@@ -405,15 +418,12 @@ private fun openFile(
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
 
-//    val theFile = "daysfriends"
-
     try {
         val file =
             File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$theFile.pdf") // "kmlpdfFromFile"
         if (!file.exists()) {
             println("in file doesn't exist block")
-          inputStream = theContext.assets.open("pdfs/$theFile.pdf")
-//            inputStream = theContext.resources.openRawResource(R.raw.daysfriends)
+            inputStream = theContext.assets.open("pdfs/$theFile.pdf")
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
         }
