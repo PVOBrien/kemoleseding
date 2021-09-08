@@ -271,7 +271,7 @@ fun DocAbove(
                                 painter = painterResource(item.picType),
                                 contentDescription = "Document Icon",
                                 modifier = Modifier
-                                    .padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 6.dp)
+                                    .padding(start = 12.dp, top = 12.dp, end = 12.dp)
                                     .size(40.dp)
                                     .clickable(
                                         enabled = true,
