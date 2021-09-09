@@ -331,6 +331,15 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
 
 // **== PREVIEW CALL ==**
 
+class MainViewModel : ViewModel() {
+    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.Home)
+    val currentScreen: LiveData<Screens> = _currentScreen
+
+    fun setCurrentScreen(screen: Screens) {
+        _currentScreen.value = screen
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -340,6 +349,10 @@ fun DefaultPreview() {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ToolbarWidget() {
+
+//    val viewModel: MainViewModel = viewModel()
+
+
     // theme for our app.
     Scaffold(
         // below line we are
@@ -408,15 +421,6 @@ fun ToolbarWidget() {
 @Composable
 fun CurriculumScreen(){
 
-}
-
-class MainViewModel : ViewModel() {
-    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.Home)
-    val currentScreen: LiveData<Screens> = _currentScreen
-
-    fun setCurrentScreen(screen: Screens) {
-        _currentScreen.value = screen
-    }
 }
 
 private fun openFile(
