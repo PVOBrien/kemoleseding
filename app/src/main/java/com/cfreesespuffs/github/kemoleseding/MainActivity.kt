@@ -39,6 +39,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.core.content.FileProvider
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
@@ -60,7 +63,6 @@ class MainActivity : ComponentActivity() {
 fun KemoLesedingTheme(
     modlist: List<Module>,
     fileShow: Boolean,
-    cardFile: Int,
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
 ) {
@@ -86,7 +88,7 @@ fun KemoLesedingTheme(
         LazyColumn(
             // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
             modifier = Modifier
-                .padding(top = 24.dp, start = 10.dp, bottom = 18.dp, end = 10.dp),
+                .padding(top = 24.dp, start = 10.dp, end = 10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             // todo: think about adding a top and bottom fade
         ) {
@@ -97,7 +99,6 @@ fun KemoLesedingTheme(
                     item.modPhoto,
                     itemCount, // itemCount is the index position of *the* item.
                     fileShow,
-                    cardFile,
                     onFileShowChange,
                     onWhichModChange
                 )
@@ -114,7 +115,6 @@ fun MCard(
     picInt: Int,
     cardCount: Int,
     fileShow: Boolean,
-    cardFile: Int,
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
 ) { // https://joebirch.co/android/exploring-jetpack-compose-card/
@@ -153,8 +153,6 @@ fun MCard(
                 picInt,
                 expanded,
                 cardCount,
-                fileShow,
-                cardFile,
                 onFileShowChange,
                 onWhichModChange
             )
@@ -169,8 +167,6 @@ fun ModuleCardBody(
     picInt: Int,
     isExpanded: Boolean,
     cardCount: Int,
-    fileShow: Boolean,
-    cardFile: Int,
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
 ) {
@@ -178,7 +174,7 @@ fun ModuleCardBody(
         modifier = Modifier
             .wrapContentSize()
     ) {
-        MPic(picInt, isExpanded, cardCount, fileShow, cardFile, onFileShowChange, onWhichModChange)
+        MPic(picInt, isExpanded, cardCount, onFileShowChange, onWhichModChange)
         ModuleDetails(mSummary, isExpanded)
     }
 }
@@ -189,8 +185,6 @@ fun MPic(
     picInt: Int,
     isExpanded: Boolean,
     ofCard: Int,
-    fileShow: Boolean,
-    cardFile: Int,
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
 ) {
@@ -222,7 +216,7 @@ fun MPic(
                         enabled = true,
                         onClickLabel = "This is a Document",
                         onClick = {
-                            var quickBool: Boolean = false
+                            val quickBool: Boolean = false
                             onFileShowChange(!quickBool)
                             println("CLICK PIC")
                             onWhichModChange(ofCard)
@@ -368,16 +362,17 @@ fun ToolbarWidget() {
                     // navigation icon is use
                     // for drawer icon.
                     IconButton(
-                        enabled = false,
+                        enabled = true,
                         onClick = { }) {
                         // below line is use to
                         // specify navigation icon.
-                        Icon(
-                            painterResource(id = R.drawable.kmlmark),
-                            "hello",
-                            modifier = Modifier.padding(0.dp),
-                            kmlLightBlue
-                        )
+//                        Icon(
+//                            painterResource(id = R.drawable.kmlmark),
+//                            "hello",
+//                            modifier = Modifier.padding(0.dp),
+//                            kmlLightBlue
+//                        )
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "") // https://www.geeksforgeeks.org/topappbar-in-android-using-jetpack-compose/
                     }
                 },
                 // below line is use to give background color
@@ -400,15 +395,28 @@ fun ToolbarWidget() {
             KemoLesedingTheme(
                 modList,
                 fileShow,
-                cardFile,
-                onFileShowChange = { fileShow = !fileShow },
-                onWhichModChange = { whichMod = it })
+                onFileShowChange = { fileShow = !fileShow }
+            ) { whichMod = it }
             DocAbove(
                 fileShow,
                 onFileShowChange = { fileShow = !fileShow },
                 modList[whichMod].docList
             )
         })
+}
+
+@Composable
+fun CurriculumScreen(){
+
+}
+
+class MainViewModel : ViewModel() {
+    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.Home)
+    val currentScreen: LiveData<Screens> = _currentScreen
+
+    fun setCurrentScreen(screen: Screens) {
+        _currentScreen.value = screen
+    }
 }
 
 private fun openFile(
