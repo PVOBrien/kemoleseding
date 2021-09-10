@@ -22,6 +22,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,13 +40,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.core.content.FileProvider
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
+import kotlinx.coroutines.launch
 import java.io.*
 
 class MainActivity : ComponentActivity() {
@@ -64,9 +64,9 @@ fun KemoLesedingTheme(
     modlist: List<Module>,
     fileShow: Boolean,
     onFileShowChange: (Boolean) -> Unit,
+    viewModel: MainViewModel,
     onWhichModChange: (Int) -> Unit
 ) {
-    // A surface container using the 'background' color from the theme
     Surface(
         color = kmlLightBlue,
         modifier = Modifier
@@ -85,8 +85,7 @@ fun KemoLesedingTheme(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
-        LazyColumn(
-            // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
+        LazyColumn( // https://foso.github.io/Jetpack-Compose-Playground/foundation/lazycolumn/
             modifier = Modifier
                 .padding(top = 24.dp, start = 10.dp, end = 10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -331,15 +330,6 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
 
 // **== PREVIEW CALL ==**
 
-class MainViewModel : ViewModel() {
-    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.Home)
-    val currentScreen: LiveData<Screens> = _currentScreen
-
-    fun setCurrentScreen(screen: Screens) {
-        _currentScreen.value = screen
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -350,53 +340,39 @@ fun DefaultPreview() {
 @Composable
 fun ToolbarWidget() {
 
-//    val viewModel: MainViewModel = viewModel()
+    val viewModel: MainViewModel = viewModel()
+//    val navController: rememberNavController() // TODO: build this
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope() // TODO: ???
+    val currentScreen by viewModel.currentScreen.observeAsState() // https://stackoverflow.com/questions/66560404/jetpack-compose-unresolved-reference-observeasstate
 
-
-    // theme for our app.
     Scaffold(
-        // below line we are
-        // creating a top bar.
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
-                // in below line we are
-                // adding title to our top bar.
                 title = {
-                    // inside title we are
-                    // adding text to our toolbar.
                     Text(
                         text = "Ke mo Leseding",
-                        // below line is use
-                        // to give text color.
                         color = Color.White
                     )
                 },
                 navigationIcon = {
-                    // navigation icon is use
-                    // for drawer icon.
                     IconButton(
                         enabled = true,
-                        onClick = { }) {
-                        // below line is use to
-                        // specify navigation icon.
-//                        Icon(
-//                            painterResource(id = R.drawable.kmlmark),
-//                            "hello",
-//                            modifier = Modifier.padding(0.dp),
-//                            kmlLightBlue
-//                        )
-                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "") // https://www.geeksforgeeks.org/topappbar-in-android-using-jetpack-compose/
+                        onClick = {
+                            println("melon!")
+                            scope.launch {
+                                scaffoldState.drawerState.open()
+                            }
+                        }) {
+                        Icon(
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = ""
+                        ) // https://www.geeksforgeeks.org/topappbar-in-android-using-jetpack-compose/
                     }
                 },
-                // below line is use to give background color
                 backgroundColor = kmlRed,
-
-                // content color is use to give
-                // color to our content in our toolbar.
                 contentColor = Color.White,
-
-                // below line is use to give
-                // elevation to our toolbar.
                 elevation = 6.dp
             )
         }, content = {
@@ -408,18 +384,44 @@ fun ToolbarWidget() {
             KemoLesedingTheme(
                 modList,
                 fileShow,
-                onFileShowChange = { fileShow = !fileShow }
+                onFileShowChange = { fileShow = !fileShow },
+                viewModel = MainViewModel()
             ) { whichMod = it }
             DocAbove(
                 fileShow,
                 onFileShowChange = { fileShow = !fileShow },
                 modList[whichMod].docList
             )
+        }, drawerContent = { // https://joebirch.co/android/exploring-jetpack-compose-column/#:~:text=Exploring%20Jetpack%20Compose%3A%20Column%201%20Declaring%20Children.%20When,inside%20of%20the%20Column.%204%20Weight%20Modifier.%20
+            Column(
+                modifier = Modifier
+                    .background(kmlYellow)
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+            )
+            {
+                Spacer(modifier = Modifier.padding(3.dp))
+                screensFromDrawer.forEach {
+                    Text(
+                        it.title,
+                    modifier = Modifier.padding(start = 12.dp)
+                        .clickable {
+                                   println("clicked ${it.title}")
+                        },
+                        fontSize = 6.em
+                        )
+                    Divider(modifier = Modifier // https://stackoverflow.com/questions/58898299/draw-a-line-in-jetpack-compose
+                        .padding(5.dp)
+                        .background(Color.Black),
+                    color = Color.Black,
+                    thickness = 3.dp)
+                }
+            }
         })
 }
 
 @Composable
-fun CurriculumScreen(){
+fun CurriculumScreen() {
 
 }
 
