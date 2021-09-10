@@ -30,4 +30,8 @@ Further down the rabbit hole, now I'm running into URI issues; namely, under the
 
 ### 2021-08-22 Update
 
-Finally, I came across this [SO article](https://stackoverflow.com/questions/4447477/how-to-copy-files-from-assets-folder-to-sdcard) that detailed FileProvider specifically in relation to updates to surrounding details re:updating to Kotlin. 
+Finally, I came across this [SO article](https://stackoverflow.com/questions/4447477/how-to-copy-files-from-assets-folder-to-sdcard) that detailed FileProvider specifically in relation to updates to surrounding details re:updating to Kotlin.
+
+### 2021-09-09 Update
+
+Well, it's been a minute. I finally cracked the FileProvider work and all that, and it works. Now: Navigation. Slowly making my way through it, this [article](https://proandroiddev.com/bottom-navigation-and-navigation-drawer-using-scaffold-from-jetpack-compose-e2167440e7a9) is the foundation, be sure to use the "NavDrawerBottomNavScaffold" branch if you're using navcontroller.
