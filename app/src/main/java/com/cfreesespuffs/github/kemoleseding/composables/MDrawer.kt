@@ -14,7 +14,7 @@ import com.cfreesespuffs.github.kemoleseding.screensFromDrawer
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 
 @Composable
-fun MDrawerContent() { // onDestinationClicked: (route: String) -> Unit
+fun MDrawerContent(onDestinationClicked: (route: String) -> Unit) { //
     Column(
         modifier = Modifier
             .background(kmlYellow)
@@ -23,13 +23,14 @@ fun MDrawerContent() { // onDestinationClicked: (route: String) -> Unit
     )
     {
         Spacer(modifier = Modifier.padding(3.dp))
-        screensFromDrawer.forEach {
+        screensFromDrawer.forEach { screen ->
             Text(
-                it.title,
+                screen.title,
                 modifier = Modifier
                     .padding(start = 12.dp)
                     .clickable {
-                        println("clicked ${it.title}")
+                        println("clicked ${screen.title}")
+                        onDestinationClicked(screen.route)
                     },
                 fontSize = 6.em
             )

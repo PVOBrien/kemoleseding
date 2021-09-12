@@ -4,44 +4,42 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cfreesespuffs.github.kemoleseding.composables.About
 import com.cfreesespuffs.github.kemoleseding.composables.KemoLesedingTheme
 import com.cfreesespuffs.github.kemoleseding.composables.MDrawerContent
-import com.cfreesespuffs.github.kemoleseding.objModules.modFour
-import com.cfreesespuffs.github.kemoleseding.objModules.modOne
-import com.cfreesespuffs.github.kemoleseding.objModules.modThree
-import com.cfreesespuffs.github.kemoleseding.objModules.modTwo
+import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
-import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ToolbarWidget()
+            KmLApp()
         }
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun ToolbarWidget() {
+fun KmLApp() {
 
     val viewModel: MainViewModel = viewModel()
     val navController = rememberNavController()
@@ -82,35 +80,85 @@ fun ToolbarWidget() {
         topBar = {
             topBar(currentScreen!!.title, buttonIcon = Icons.Filled.Menu)
         },
+        drawerContent = { // https://joebirch.co/android/exploring-jetpack-compose-column/#:~:text=Exploring%20Jetpack%20Compose%3A%20Column%201%20Declaring%20Children.%20When,inside%20of%20the%20Column.%204%20Weight%20Modifier.%20
+            MDrawerContent() { route ->
+                println("this is $route")
+                scope.launch {
+                    scaffoldState.drawerState.close()
+                }
+                navController.navigate(route) {
+                    popUpTo(route)
+                    launchSingleTop = true
+                }
+            }
+        },
         content = {
             var fileShow by remember { mutableStateOf(false) }
             val modList = listOf(modOne, modTwo, modThree, modFour)
             var whichMod by remember { mutableStateOf(0) }
 
-            KemoLesedingTheme(
-                modList,
-                fileShow,
-                onFileShowChange = { fileShow = !fileShow },
-                viewModel = MainViewModel()
-            ) { whichMod = it }
-            DocAbove(
-                fileShow,
-                onFileShowChange = { fileShow = !fileShow },
-                modList[whichMod].docList
+            NavHost(
+                navController = navController as NavHostController,
+                startDestination = "KemoLesedingTheme"
             )
-        },
-        drawerContent = { // https://joebirch.co/android/exploring-jetpack-compose-column/#:~:text=Exploring%20Jetpack%20Compose%3A%20Column%201%20Declaring%20Children.%20When,inside%20of%20the%20Column.%204%20Weight%20Modifier.%20
-            MDrawerContent()
+            {
+                composable("Home") { Home() }
+                composable(Screens.TopScreens.Home.route) {
+                    KemoLesedingTheme(viewModel = viewModel,
+                    onWhichModChange = { whichMod = it },
+                    onFileShowChange = { fileShow = !fileShow }
+                    )
+                }
+                composable(Screens.TopScreens.Curriculum.route) { Home() }
+                composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
+            }
+
+
+//            KemoLesedingTheme(
+//                modList,
+//                fileShow,
+//                onFileShowChange = { fileShow = !fileShow },
+//                viewModel = MainViewModel()
+//            ) { whichMod = it }
+//            DocAbove(
+//                fileShow,
+//                onFileShowChange = { fileShow = !fileShow },
+//                modList[whichMod].docList
+//            )
         }
     )
 }
 
+@Composable
+fun Home() { // viewModel: MainViewModel
+//    viewModel.setCurrentScreen(Screens.TopScreens.Home)
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Home", style = MaterialTheme.typography.h4)
+    }
+}
 
+//@ExperimentalAnimationApi
+//@Composable
+//fun NavigationHost(navController: NavController, viewModel: MainViewModel) {
+//    NavHost(
+//        navController = navController as NavHostController,
+//        startDestination = "Home"
+//    )
+//    {
+//        composable("Home") { Home() }
+////        composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel) }
+//        composable(Screens.TopScreens.Curriculum.route) { Home() }
+//        composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
+//    }
+//}
 
 // **== PREVIEW CALL ==**
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ToolbarWidget()
+    KmLApp()
 }

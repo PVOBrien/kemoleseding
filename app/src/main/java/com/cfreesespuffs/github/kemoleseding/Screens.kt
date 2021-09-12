@@ -15,7 +15,7 @@ sealed class Screens (val route: String, val title: String) {
         route,
         title
     ) {
-        object Home : TopScreens("home", "Main Screen", Icons.Filled.Star)
+        object Home : TopScreens("KemoLesedingTheme", "Home", Icons.Filled.Star)
         object Curriculum : TopScreens("curriculum", "Curriculum", Icons.Filled.Info)
         object About : TopScreens("about", "About", Icons.Filled.Info)
     }
@@ -24,5 +24,5 @@ sealed class Screens (val route: String, val title: String) {
 val screensFromDrawer = listOf(
     Screens.TopScreens.Home,
     Screens.TopScreens.Curriculum,
-    Screens.TopScreens.About
+    Screens.TopScreens.About,
 )

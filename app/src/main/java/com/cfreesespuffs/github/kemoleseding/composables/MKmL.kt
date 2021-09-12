@@ -15,18 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cfreesespuffs.github.kemoleseding.MainViewModel
-import com.cfreesespuffs.github.kemoleseding.objModules.Module
+import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 
 @ExperimentalAnimationApi
 @Composable
 fun KemoLesedingTheme(
-    modlist: List<Module>,
-    fileShow: Boolean,
-    onFileShowChange: (Boolean) -> Unit,
+//    modlist: List<Module>,
+//    fileShow: Boolean,
     viewModel: MainViewModel,
-    onWhichModChange: (Int) -> Unit
+    onWhichModChange: (Int) -> Unit,
+    onFileShowChange: (Boolean) -> Unit,
 ) {
+
+    val modList: List<Module> = listOf(modOne, modTwo, modThree, modFour)
+    val fileShow: Boolean = false
+
+
     Surface(
         color = kmlLightBlue,
         modifier = Modifier
@@ -35,7 +40,7 @@ fun KemoLesedingTheme(
                 enabled = true,
                 onClick = {
                     println("onSurface")
-                    onFileShowChange(!fileShow)
+//                    onFileShowChange(!fileShow)
                 }
             )
     ) {
@@ -51,7 +56,7 @@ fun KemoLesedingTheme(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             // todo: think about adding a top and bottom fade
         ) {
-            itemsIndexed(modlist) { itemCount, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
+            itemsIndexed(modList) { itemCount, item -> // https://developer.android.com/reference/kotlin/androidx/compose/foundation/lazy/package-summary#lazycolumn
                 MCard(
                     item.title,
                     item.summary,
