@@ -1,4 +1,4 @@
-package com.cfreesespuffs.github.kemoleseding
+package com.cfreesespuffs.github.kemoleseding.composables
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cfreesespuffs.github.kemoleseding.objModules.docDetails
+import com.cfreesespuffs.github.kemoleseding.openFile
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 
@@ -86,6 +87,14 @@ fun DocAbove(
                                     end = 12.dp,
                                     bottom = 8.dp
                                 )
+                                    .clickable(
+                                        enabled = true,
+                                        onClickLabel = "Show the file",
+                                        onClick = {
+                                            println("Click!")
+                                            openFile(context, item.docName)
+                                        }
+                                    )
                             )
                         }
                     }

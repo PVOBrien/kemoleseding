@@ -17,7 +17,7 @@ sealed class Screens (val route: String, val title: String) {
     ) {
         object Home : TopScreens("KemoLesedingTheme", "Home", Icons.Filled.Star)
         object Curriculum : TopScreens("curriculum", "Curriculum", Icons.Filled.Info)
-        object About : TopScreens("about", "About", Icons.Filled.Info)
+        object About : TopScreens("About", "About", Icons.Filled.Info)
     }
 }
 

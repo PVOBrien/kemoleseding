@@ -1,9 +1,13 @@
 package com.cfreesespuffs.github.kemoleseding
 
+import android.content.Intent
+import android.graphics.fonts.FontStyle
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -11,10 +15,20 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -44,12 +58,11 @@ fun KmLApp() {
     val viewModel: MainViewModel = viewModel()
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-    val scope =
-        rememberCoroutineScope() // this is same as messages to reach the main thread. not *the* routine, but a COroutine.
-    val currentScreen by viewModel.currentScreen.observeAsState() // https://stackoverflow.com/questions/66560404/jetpack-compose-unresolved-reference-observeasstate
+    val scope = rememberCoroutineScope()
+    val currentScreen by viewModel.currentScreen.observeAsState()
 
     @Composable
-    fun topBar(title: String = "", buttonIcon: ImageVector) { // , onButtonClicked: () -> Unit
+    fun topBar(title: String = "", buttonIcon: ImageVector) {
         TopAppBar(
             title = {
                 Text(title, color = Color.White)
@@ -80,80 +93,84 @@ fun KmLApp() {
         topBar = {
             topBar(currentScreen!!.title, buttonIcon = Icons.Filled.Menu)
         },
-        drawerContent = { // https://joebirch.co/android/exploring-jetpack-compose-column/#:~:text=Exploring%20Jetpack%20Compose%3A%20Column%201%20Declaring%20Children.%20When,inside%20of%20the%20Column.%204%20Weight%20Modifier.%20
+        drawerContent = {
             MDrawerContent() { route ->
                 println("this is $route")
                 scope.launch {
                     scaffoldState.drawerState.close()
                 }
                 navController.navigate(route) {
-                    popUpTo(route)
+                    popUpTo("KemoLesedingTheme")
                     launchSingleTop = true
                 }
             }
         },
         content = {
-            var fileShow by remember { mutableStateOf(false) }
-            val modList = listOf(modOne, modTwo, modThree, modFour)
-            var whichMod by remember { mutableStateOf(0) }
 
             NavHost(
-                navController = navController as NavHostController,
+                navController = navController,
                 startDestination = "KemoLesedingTheme"
             )
             {
-                composable("Home") { Home() }
                 composable(Screens.TopScreens.Home.route) {
-                    KemoLesedingTheme(viewModel = viewModel,
-                    onWhichModChange = { whichMod = it },
-                    onFileShowChange = { fileShow = !fileShow }
+                    KemoLesedingTheme(
+                        viewModel = viewModel,
                     )
                 }
-                composable(Screens.TopScreens.Curriculum.route) { Home() }
+                composable(Screens.TopScreens.Curriculum.route) { Curriculum(viewModel = viewModel) }
                 composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
             }
-
-
-//            KemoLesedingTheme(
-//                modList,
-//                fileShow,
-//                onFileShowChange = { fileShow = !fileShow },
-//                viewModel = MainViewModel()
-//            ) { whichMod = it }
-//            DocAbove(
-//                fileShow,
-//                onFileShowChange = { fileShow = !fileShow },
-//                modList[whichMod].docList
-//            )
         }
     )
 }
 
 @Composable
-fun Home() { // viewModel: MainViewModel
-//    viewModel.setCurrentScreen(Screens.TopScreens.Home)
+fun Curriculum(viewModel: MainViewModel) {
+
+    val context = LocalContext.current
+
+    viewModel.setCurrentScreen(Screens.TopScreens.Curriculum)
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Home", style = MaterialTheme.typography.h4)
+        Text(
+            buildAnnotatedString {
+                withStyle(SpanStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)) {
+                    append("Ke Mo Leseding")
+                }
+                append(" is a full HIV and AIDS awareness package, complete with training materials, videos, and a facilitator guide. Reach out to Thusang Bana Center for information to receive additional information.")
+            },
+//            text = "Ke mo Leseding is a full HIV and AIDS awareness package, complete with training materials, videos, and a facilitator guide. Reach out to Thusang Bana Center for information to receive additional information.",
+            style = MaterialTheme.typography.body1,
+            modifier = Modifier.padding(12.dp)
+        )
+        Row() {
+            Image(
+                painterResource(id = R.drawable.kmlcurriculum),
+                contentDescription = "Ke mo Leseding Curriculum",
+                modifier = Modifier
+                    .size(196.dp)
+            )
+            Image(
+                painterResource(id = R.drawable.kmlleaderguide),
+                contentDescription = "KmL Leader's Guide",
+                modifier = Modifier
+                    .size(196.dp)
+            )
+        }
+        Button(onClick = {
+            println("hello email!")
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:")
+            intent.putExtra(Intent.EXTRA_EMAIL, "thusangbanacenter@gmail.com")
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Ke mo Leseding Content Request")
+            startActivity(context, Intent.createChooser(intent, "Send Email..."), null)
+        }) {
+            Text(text = "Email Thusang Bana Center")
+        }
     }
 }
-
-//@ExperimentalAnimationApi
-//@Composable
-//fun NavigationHost(navController: NavController, viewModel: MainViewModel) {
-//    NavHost(
-//        navController = navController as NavHostController,
-//        startDestination = "Home"
-//    )
-//    {
-//        composable("Home") { Home() }
-////        composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel) }
-//        composable(Screens.TopScreens.Curriculum.route) { Home() }
-//        composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
-//    }
-//}
 
 // **== PREVIEW CALL ==**
 

@@ -29,11 +29,10 @@ fun MCard(
     fileShow: Boolean,
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
-) { // https://joebirch.co/android/exploring-jetpack-compose-card/
+) {
     println("the cardCount: $cardCount")
     var expanded by remember { mutableStateOf(false) }
     Button(
-        // to be used to show/animate https://developer.android.com/jetpack/compose/animation
         onClick = {
             if (fileShow) {
                 onFileShowChange(!fileShow)
@@ -41,15 +40,15 @@ fun MCard(
                 expanded = !expanded
             }
         },
-        colors = ButtonDefaults.buttonColors(backgroundColor = kmlRed), // https://stackoverflow.com/questions/64376333/background-color-on-button-in-jetpack-compose
-        shape = RoundedCornerShape(16.dp), // doesn't seem to inherit the exact shape from above.
+        colors = ButtonDefaults.buttonColors(backgroundColor = kmlRed),
+        shape = RoundedCornerShape(16.dp),
         modifier = Modifier.shadow(
             5.dp,
             RoundedCornerShape(16.dp)
         )
     ) {
         Column(modifier = Modifier.padding(bottom = 3.dp)) {
-            Text( // this is the Title
+            Text(
                 text = mCString,
                 Modifier
                     .fillMaxWidth()
@@ -58,7 +57,7 @@ fun MCard(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 4.em,
                 fontWeight = FontWeight.Bold,
-                color = Color.White // otherwise button text defaults to Black
+                color = Color.White
             )
             ModuleCardBody(
                 summary,
