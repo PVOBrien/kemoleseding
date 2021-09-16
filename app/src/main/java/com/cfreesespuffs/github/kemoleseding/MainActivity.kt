@@ -36,6 +36,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cfreesespuffs.github.kemoleseding.composables.About
+import com.cfreesespuffs.github.kemoleseding.composables.Curriculum
 import com.cfreesespuffs.github.kemoleseding.composables.KemoLesedingTheme
 import com.cfreesespuffs.github.kemoleseding.composables.MDrawerContent
 import com.cfreesespuffs.github.kemoleseding.objModules.*
@@ -112,64 +113,12 @@ fun KmLApp() {
                 startDestination = "KemoLesedingTheme"
             )
             {
-                composable(Screens.TopScreens.Home.route) {
-                    KemoLesedingTheme(
-                        viewModel = viewModel,
-                    )
-                }
+                composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel) }
                 composable(Screens.TopScreens.Curriculum.route) { Curriculum(viewModel = viewModel) }
                 composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
             }
         }
     )
-}
-
-@Composable
-fun Curriculum(viewModel: MainViewModel) {
-
-    val context = LocalContext.current
-
-    viewModel.setCurrentScreen(Screens.TopScreens.Curriculum)
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            buildAnnotatedString {
-                withStyle(SpanStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)) {
-                    append("Ke Mo Leseding")
-                }
-                append(" is a full HIV and AIDS awareness package, complete with training materials, videos, and a facilitator guide. Reach out to Thusang Bana Center for information to receive additional information.")
-            },
-//            text = "Ke mo Leseding is a full HIV and AIDS awareness package, complete with training materials, videos, and a facilitator guide. Reach out to Thusang Bana Center for information to receive additional information.",
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(12.dp)
-        )
-        Row() {
-            Image(
-                painterResource(id = R.drawable.kmlcurriculum),
-                contentDescription = "Ke mo Leseding Curriculum",
-                modifier = Modifier
-                    .size(196.dp)
-            )
-            Image(
-                painterResource(id = R.drawable.kmlleaderguide),
-                contentDescription = "KmL Leader's Guide",
-                modifier = Modifier
-                    .size(196.dp)
-            )
-        }
-        Button(onClick = {
-            println("hello email!")
-            val intent = Intent(Intent.ACTION_SENDTO)
-            intent.data = Uri.parse("mailto:")
-            intent.putExtra(Intent.EXTRA_EMAIL, "thusangbanacenter@gmail.com")
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Ke mo Leseding Content Request")
-            startActivity(context, Intent.createChooser(intent, "Send Email..."), null)
-        }) {
-            Text(text = "Email Thusang Bana Center")
-        }
-    }
 }
 
 // **== PREVIEW CALL ==**
