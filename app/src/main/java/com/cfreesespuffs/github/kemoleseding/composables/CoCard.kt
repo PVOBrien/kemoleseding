@@ -15,11 +15,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cfreesespuffs.github.kemoleseding.R
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 
 @Composable
-fun CoCard() {
+fun CoCard(
+    cosPic: Int,
+    cosName: String,
+    cosDesc: String
+) {
         Card() {
             Column(
                 modifier = Modifier
@@ -28,33 +31,30 @@ fun CoCard() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Thusang Bana Center",
+                    text = cosName,
                     style = MaterialTheme.typography.h4,
                     modifier = Modifier.padding(8.dp)
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.tbclogo),
+                    painter = painterResource(id = cosPic),
                     contentDescription = "Thusang Bana Centre logo",
                     modifier = Modifier
                         .shadow(12.dp, clip = true)
-                        .background(Color.White, RectangleShape)
+                        .background(Color.White)
                         .size(128.dp)
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
-                    text = "     Thusang Bana Centre (TBC) is a community voluntary based nonprofit making organization in Molepolole with the mandate of caring for orphans & vulnerable children. Their health educators work to destigmatize HIV and AIDS in the Kweneng district and beyond. \n\n     TBC's founder Stanley Monageng is a tireless advocate and Treat All Champion. The film Ke mo Leseding follows Stanley Monageng as he undertakes a 400 kilometer trek throughout Botswana to raise awareness of HIV treatment, and destigmatize HIV and AIDS, and educate Batswana on the latest treatment for the disease.",
+                    text = cosDesc,
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier
                         .background(
-                            SolidColor(Color.White),
+                            SolidColor(Color.White), // https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/Brush
                             alpha = .5F
                         )
                         .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp)
                 )
-                Divider(
-                    thickness = 6.dp,
-                    color = Color.Black
-                )
+
             }
         }
     }
@@ -63,5 +63,5 @@ fun CoCard() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    CoCard()
+//    CoCard()
 }
