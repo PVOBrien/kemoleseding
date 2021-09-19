@@ -1,9 +1,6 @@
 package com.cfreesespuffs.github.kemoleseding.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cfreesespuffs.github.kemoleseding.objModules.docDetails
 import com.cfreesespuffs.github.kemoleseding.openFile
@@ -36,8 +34,8 @@ fun DocAbove(
     println("this is the current docDetail file path: ${passedDocDetails[0].docName}")
     AnimatedVisibility(
         isVisible,
-        enter = slideInVertically(),
-        exit = slideOutVertically(),
+        enter = slideInVertically()+ fadeIn(),
+        exit = slideOutVertically()+ fadeOut(),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(), // THIS CENTERS STUFF.
@@ -82,11 +80,12 @@ fun DocAbove(
                             )
                             Text(
                                 text = item.docDescription,
-                                modifier = Modifier.padding(
-                                    start = 12.dp,
-                                    end = 12.dp,
-                                    bottom = 8.dp
-                                )
+                                modifier = Modifier
+                                    .padding(
+                                        start = 12.dp,
+                                        end = 12.dp,
+                                        bottom = 8.dp
+                                    )
                                     .clickable(
                                         enabled = true,
                                         onClickLabel = "Show the file",
@@ -94,7 +93,8 @@ fun DocAbove(
                                             println("Click!")
                                             openFile(context, item.docName)
                                         }
-                                    )
+                                    ),
+                                textAlign = TextAlign.Center
                             )
                         }
                     }
