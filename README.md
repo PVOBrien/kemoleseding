@@ -35,3 +35,8 @@ Finally, I came across this [SO article](https://stackoverflow.com/questions/444
 ### 2021-09-09 Update
 
 Well, it's been a minute. I finally cracked the FileProvider work and all that, and it works. Now: Navigation. Slowly making my way through it, this [article](https://proandroiddev.com/bottom-navigation-and-navigation-drawer-using-scaffold-from-jetpack-compose-e2167440e7a9) is the foundation, be sure to use the "NavDrawerBottomNavScaffold" branch if you're using navcontroller.
+
+### 2021-09-21
+
+Got the Scaffold working, plus a splash screen.
+Next on the docket: Settings, specifically switching between English and Setswana via a toggle. I'll want to talk through this, as it requires swapping between the two for everything, so I'll need to figure a way to... abstract? the languages/strings so I only have to store that a/b option in one place and it'll propagate/cascade down simply. Shall see.

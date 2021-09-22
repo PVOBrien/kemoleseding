@@ -23,7 +23,7 @@ val modOne = Module(
 
 val modTwo = Module(
     "HIV Prevention",
-    "Stanley says, \"the best cure is prevention\", and it's true. Thankfully there are many methods of HIV prevention: male and female condoms, PrEP, PEP, abstinence, ARVs, and understanding HIV all form barriers between a body and HIV to reduce the chance of infection. It is important to use as many of these as possible to keep healthy and safe.",
+    "Stanley says, \"the best cure is prevention\", and it's true. Thankfully there are many methods of HIV prevention: male and female condoms, PrEP, PEP, abstinence, ARVs, VMMC< and understanding HIV all form barriers between a body and HIV to reduce the chance of infection. It is important to use as many of these as possible to keep healthy and safe.",
     R.drawable.mod_two_pic,
     listOf(
         docDetails("modanswertwo", "Answers", R.drawable.key),

@@ -11,7 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.res.TypedArrayUtils.getString
 import com.cfreesespuffs.github.kemoleseding.MainViewModel
+import com.cfreesespuffs.github.kemoleseding.R
 import com.cfreesespuffs.github.kemoleseding.Screens
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
@@ -21,7 +23,6 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 fun KemoLesedingTheme(
     viewModel: MainViewModel
 ) {
-
     viewModel.setCurrentScreen((Screens.TopScreens.Home))
     var fileShow by remember { mutableStateOf(false) }
     var whichMod by remember { mutableStateOf(0) }
@@ -39,18 +40,21 @@ fun KemoLesedingTheme(
                 }
             )
     ) {
-        Text(
-            text = "Click each for additional details",
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+
         LazyColumn(
             modifier = Modifier
-                .padding(top = 24.dp, start = 10.dp, end = 10.dp),
+                .padding(horizontal = 10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             // todo: think about adding a top and bottom fade
         ) {
             itemsIndexed(modList) { itemCount, item ->
+                if (itemCount == 0) {
+                    Text(
+                        text = "Click each for additional details",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+                }
                 MCard(
                     item.title,
                     item.summary,
