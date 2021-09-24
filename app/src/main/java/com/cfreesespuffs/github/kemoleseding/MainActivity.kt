@@ -80,7 +80,7 @@ fun KmLApp() {
             }
         },
         drawerContent = {
-            MDrawerContent() { route ->
+            MDrawerContent(viewModel = viewModel) { route ->
                 println("this is $route")
                 scope.launch {
                     scaffoldState.drawerState.close()

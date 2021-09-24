@@ -40,3 +40,4 @@ Well, it's been a minute. I finally cracked the FileProvider work and all that, 
 
 Got the Scaffold working, plus a splash screen.
 Next on the docket: Settings, specifically switching between English and Setswana via a toggle. I'll want to talk through this, as it requires swapping between the two for everything, so I'll need to figure a way to... abstract? the languages/strings so I only have to store that a/b option in one place and it'll propagate/cascade down simply. Shall see.
+
