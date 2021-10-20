@@ -20,9 +20,6 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 @Composable
 fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: String) -> Unit) {
 
-//    var theText = "THETEXT"
-//    if (viewModel.isLanguage) theText = "NOTTEXT"
-
     Column(
         modifier = Modifier
             .background(kmlYellow)
@@ -50,7 +47,7 @@ fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: Strin
                 thickness = 3.dp
             )
         }
-//        Row() {
+//        Row() { // TODO: turn on once we have Setswana.
 //
 //            val mChecked = remember { mutableStateOf(viewModel.isLanguage) }
 //            var language = "English"
@@ -77,6 +74,5 @@ fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: Strin
 //            )
 //        }
 
-//        Text(text = theText)
     }
 }
