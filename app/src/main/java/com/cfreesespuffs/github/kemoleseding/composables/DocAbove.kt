@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.cfreesespuffs.github.kemoleseding.objModules.docDetails
+import com.cfreesespuffs.github.kemoleseding.objModules.DocDetails
 import com.cfreesespuffs.github.kemoleseding.openFile
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
@@ -28,17 +28,16 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 fun DocAbove(
     isVisible: Boolean,
     onFileShowChange: (Boolean) -> Unit,
-    passedDocDetails: List<docDetails>,
+    passedDocDetails: List<DocDetails>,
 ) {
     val context = LocalContext.current
-    println("this is the current docDetail file path: ${passedDocDetails[0].docName}")
     AnimatedVisibility(
         isVisible,
-        enter = slideInVertically()+ fadeIn(),
-        exit = slideOutVertically()+ fadeOut(),
+        enter = slideInVertically() + fadeIn(),
+        exit = slideOutVertically() + fadeOut(),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(), // THIS CENTERS STUFF.
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -102,7 +101,7 @@ fun DocAbove(
                 Button(
                     modifier = Modifier.padding(all = 12.dp),
                     onClick = { onFileShowChange(!isVisible) },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = kmlLightBlue), // https://stackoverflow.com/questions/64376333/background-color-on-button-in-jetpack-compose
+                    colors = ButtonDefaults.buttonColors(backgroundColor = kmlLightBlue),
                 )
                 {
                     Text(text = "Close")

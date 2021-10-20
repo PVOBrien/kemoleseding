@@ -34,13 +34,12 @@ fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: Strin
                 modifier = Modifier
                     .padding(start = 12.dp)
                     .clickable {
-                        println("clicked ${screen.title}")
                         onDestinationClicked(screen.route)
                     },
                 fontSize = 6.em
             )
             Divider(
-                modifier = Modifier // https://stackoverflow.com/questions/58898299/draw-a-line-in-jetpack-compose
+                modifier = Modifier
                     .padding(5.dp)
                     .background(Color.Black),
                 color = Color.Black,

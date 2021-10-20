@@ -21,7 +21,7 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen( // https://www.geeksforgeeks.org/animated-splash-screen-in-android-using-jetpack-compose/
+fun SplashScreen(
     navController: NavController
 ) {
     val scale = remember { androidx.compose.animation.core.Animatable(0f) }
@@ -31,16 +31,6 @@ fun SplashScreen( // https://www.geeksforgeeks.org/animated-splash-screen-in-and
         modifier = Modifier
             .fillMaxSize()
     ) {
-
-/*        Image( // https://stackoverflow.com/questions/58956261/how-to-show-an-image-in-surface-in-jetpack-compose
-             works but TODO: funky bars of bg at top and bottom. why?
-            painter = painterResource(id = R.drawable.kml),
-            contentDescription = "kml Image",
-            modifier = Modifier.fillMaxSize(),
-            alignment = Alignment.Center,
-            contentScale = ContentScale.Inside
-        )
-*/
 
         LaunchedEffect(key1 = true) {
             scale.animateTo(

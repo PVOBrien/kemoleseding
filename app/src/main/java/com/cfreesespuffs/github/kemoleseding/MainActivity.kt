@@ -7,13 +7,14 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +24,6 @@ import com.cfreesespuffs.github.kemoleseding.composables.Curriculum
 import com.cfreesespuffs.github.kemoleseding.composables.KemoLesedingTheme
 import com.cfreesespuffs.github.kemoleseding.composables.MDrawerContent
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlRed
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -75,7 +75,7 @@ fun KmLApp() {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            if (!currentScreen?.route.equals("SplashScreen")) { // https://stackoverflow.com/questions/66837991/hide-top-and-bottom-navigator-on-a-specific-screen-inside-scaffold-jetpack-compo
+            if (!currentScreen?.route.equals("SplashScreen")) {
                 topBar(currentScreen!!.title, buttonIcon = Icons.Filled.Menu)
             }
         },
@@ -106,8 +106,6 @@ fun KmLApp() {
         }
     )
 }
-
-// **== PREVIEW CALL ==**
 
 @Preview(showBackground = true)
 @Composable

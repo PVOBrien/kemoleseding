@@ -26,12 +26,12 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
                 animationSpec = spring(
                     dampingRatio = Spring.DampingRatioNoBouncy
                 )
-            ) // https://www.youtube.com/watch?v=7yY2OocGiQU&t=243s and https://developer.android.com/jetpack/compose/animation#animatedcontent to modify the specs
+            )
     ) {
         Text(
             text = theSummary,
             maxLines = if (isExpanded) Int.MAX_VALUE else 6,
-            overflow = TextOverflow.Ellipsis, // https://developer.android.com/jetpack/compose/text
+            overflow = TextOverflow.Ellipsis,
             color = Color.White,
             fontFamily = FontFamily.Serif,
             fontSize = 3.em,

@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:icon="@mipmap/kml_mark"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/kml_mark"
@@ -35,5 +36,3 @@
     </application>
 
 </manifest>
-
-    <!--            android:authorities="${applicationID}"-->

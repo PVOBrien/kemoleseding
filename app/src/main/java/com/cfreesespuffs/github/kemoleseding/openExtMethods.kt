@@ -15,7 +15,7 @@ fun openFile(
 
     try {
         val file =
-            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$theFile.pdf") // "kmlpdfFromFile"
+            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$theFile.pdf")
         if (!file.exists()) {
             println("in file doesn't exist block")
             inputStream = theContext.assets.open("pdfs/$theFile.pdf")
@@ -34,7 +34,7 @@ fun openFile(
             .setDataAndType(
                 uri,
                 theContext.contentResolver.getType(uri)
-            ) // context.contentResolver.getType(<file>) is the best way to get the MIME type for any file, as it requires no work on coder's part
+            )
             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)

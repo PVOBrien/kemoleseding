@@ -35,7 +35,7 @@ fun About(viewModel: MainViewModel) {
                     item.coName,
                     item.coDesc
                 )
-                if (idx < coCardList.size - 1) // https://stackoverflow.com/questions/67139925/how-to-add-dividers-between-items-in-a-lazycolumn-jetpack-compose
+                if (idx < coCardList.size - 1)
                     Divider(
                         thickness = 6.dp,
                         color = Color.Black

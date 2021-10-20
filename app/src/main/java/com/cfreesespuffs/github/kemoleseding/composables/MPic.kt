@@ -27,11 +27,7 @@ fun MPic(
     onFileShowChange: (Boolean) -> Unit,
     onWhichModChange: (Int) -> Unit
 ) {
-
-    var docsExpanded by remember { mutableStateOf(false) }
-
-    Column(horizontalAlignment = Alignment.CenterHorizontally) { // https://stackoverflow.com/questions/60479567/how-to-center-elements-inside-a-column-in-jetpack-compose
-
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = picInt),
             contentScale = ContentScale.Crop,
@@ -40,7 +36,6 @@ fun MPic(
                 .clip(RoundedCornerShape(10.dp)),
             contentDescription = "Stanley walking strong"
         )
-
         AnimatedVisibility(isExpanded) {
             Image(
                 painter = painterResource(id = R.drawable.folder),

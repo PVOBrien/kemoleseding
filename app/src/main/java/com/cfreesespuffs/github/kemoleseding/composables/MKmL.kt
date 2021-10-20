@@ -64,7 +64,7 @@ fun KemoLesedingTheme(
                     onFileShowChange = { fileShow = !fileShow },
                     onWhichModChange = { whichMod = it }
                 )
-                if (itemCount == modList.size-1) {
+                if (itemCount == modList.size - 1) {
                     Spacer(modifier = Modifier.padding(4.dp))
                 }
             }
