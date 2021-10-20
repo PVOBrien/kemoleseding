@@ -20,8 +20,8 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlYellow
 @Composable
 fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: String) -> Unit) {
 
-    var theText = "THETEXT"
-    if (viewModel.isLanguage) theText = "NOTTEXT"
+//    var theText = "THETEXT"
+//    if (viewModel.isLanguage) theText = "NOTTEXT"
 
     Column(
         modifier = Modifier
@@ -50,33 +50,33 @@ fun MDrawerContent(viewModel: MainViewModel, onDestinationClicked: (route: Strin
                 thickness = 3.dp
             )
         }
-        Row() {
+//        Row() {
+//
+//            val mChecked = remember { mutableStateOf(viewModel.isLanguage) }
+//            var language = "English"
+//            if (mChecked.value) {
+//                language = "Setswana"
+//            }
+//
+//            Switch(
+//                checked = mChecked.value,
+//                modifier = Modifier.padding(top = 4.dp, start = 8.dp),
+//                onCheckedChange = { _ ->
+//                    mChecked.value = !mChecked.value
+//                    println("vModel language is checked: ${viewModel.isLanguage}")
+//                    viewModel.changeLang()
+//                },
+//                enabled = true,
+//            )
+//
+//            Text(
+//                text = language,
+//                modifier = Modifier
+//                    .padding(start = 12.dp),
+//                fontSize = 6.em
+//            )
+//        }
 
-            val mChecked = remember { mutableStateOf(viewModel.isLanguage) }
-            var language = "English"
-            if (mChecked.value) {
-                language = "Setswana"
-            }
-
-            Switch(
-                checked = mChecked.value,
-                modifier = Modifier.padding(top = 4.dp, start = 8.dp),
-                onCheckedChange = { _ ->
-                    mChecked.value = !mChecked.value
-                    println("vModel language is checked: ${viewModel.isLanguage}")
-                    viewModel.changeLang()
-                },
-                enabled = true,
-            )
-
-            Text(
-                text = language,
-                modifier = Modifier
-                    .padding(start = 12.dp),
-                fontSize = 6.em
-            )
-        }
-
-        Text(text = theText)
+//        Text(text = theText)
     }
 }

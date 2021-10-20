@@ -13,7 +13,7 @@ data class docDetails(val docName: String, val docDescription: String, val picTy
 
 val modOne = Module(
     "HIV in Botswana Then and Now",
-    "In the 1990s and early 2000s Botswana contended with epidemic levels of HIV and AIDS. It was a difficult time, with the prevalence rate hovering around 30% at the height of the epidemic. However, with the advent of ARVs, and improved understanding, Botswana worked to contain its spread. Key populations and risky activities were identified and people were informed of these, and the government took strides to protect vulnerable groups. Batswana made it happen, and over the course of the years HIV and AIDS is on the down trend.",
+    "In the 1990s and early 2000s Botswana contended with epidemic levels of HIV and AIDS. It was a difficult time, with the prevalence rate hovering around 30% at the height of the epidemic. However, with the advent of ARVs, and improved understanding, Botswana worked to contain its spread. Key populations and risky activities were identified, and people were informed of these, and the government took strides to protect vulnerable groups. Batswana made it happen, and over the course of the years HIV and AIDS is on the down trend.",
     R.drawable.mod_one_pic,
     listOf(
         docDetails("modanswerone", "Answers", R.drawable.key),
@@ -23,7 +23,7 @@ val modOne = Module(
 
 val modTwo = Module(
     "HIV Prevention",
-    "Stanley says, \"the best cure is prevention\", and it's true. Thankfully there are many methods of HIV prevention: male and female condoms, PrEP, PEP, abstinence, ARVs, VMMC< and understanding HIV all form barriers between a body and HIV to reduce the chance of infection. It is important to use as many of these as possible to keep healthy and safe.",
+    "Stanley says, \"the best cure is prevention\", and it's true. Thankfully there are many methods of HIV prevention: male and female condoms, PrEP, PEP, abstinence, ARVs, VMMC and understanding HIV all form barriers between a body and HIV to reduce the chance of infection. It is important to use as many of these as possible to keep healthy and safe.",
     R.drawable.mod_two_pic,
     listOf(
         docDetails("modanswertwo", "Answers", R.drawable.key),
