@@ -51,6 +51,7 @@ fun SplashScreen(
                 )
             )
             delay(100L)
+            navController.popBackStack()
             navController.navigate("KemoLesedingTheme")
         }
 
