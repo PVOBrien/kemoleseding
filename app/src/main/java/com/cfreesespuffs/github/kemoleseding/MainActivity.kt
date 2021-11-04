@@ -7,10 +7,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +42,7 @@ fun KmLApp() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val currentScreen by viewModel.currentScreen.observeAsState()
+    var openMod by remember { mutableStateOf(false)}
 
     @Composable
     fun topBar(title: String = "", buttonIcon: ImageVector) {
@@ -99,7 +98,7 @@ fun KmLApp() {
             )
             {
                 composable(Screens.TopScreens.SplashScreen.route) { SplashScreen(navController = navController) }
-                composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel) }
+                composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel, modDown = { openMod = !openMod }, openMod) }
                 composable(Screens.TopScreens.Curriculum.route) { Curriculum(viewModel = viewModel) }
                 composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
             }

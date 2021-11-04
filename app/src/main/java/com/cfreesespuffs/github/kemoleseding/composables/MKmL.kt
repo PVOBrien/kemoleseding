@@ -11,9 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.res.TypedArrayUtils.getString
 import com.cfreesespuffs.github.kemoleseding.MainViewModel
-import com.cfreesespuffs.github.kemoleseding.R
 import com.cfreesespuffs.github.kemoleseding.Screens
 import com.cfreesespuffs.github.kemoleseding.objModules.*
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
@@ -21,10 +19,11 @@ import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
 @ExperimentalAnimationApi
 @Composable
 fun KemoLesedingTheme(
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    modDown: (Boolean) -> Unit,
+    openMod: Boolean
 ) {
     viewModel.setCurrentScreen((Screens.TopScreens.Home))
-    var fileShow by remember { mutableStateOf(false) }
     var whichMod by remember { mutableStateOf(0) }
     val modList: List<Module> = listOf(modOne, modTwo, modThree, modFour)
 
@@ -35,8 +34,7 @@ fun KemoLesedingTheme(
             .clickable(
                 enabled = true,
                 onClick = {
-                    println("onSurface")
-                    !fileShow
+                    if (openMod) modDown(!openMod)
                 }
             )
     ) {
@@ -60,8 +58,8 @@ fun KemoLesedingTheme(
                     item.summary,
                     item.modPhoto,
                     itemCount,
-                    fileShow,
-                    onFileShowChange = { fileShow = !fileShow },
+                    openMod,
+                    onFileShowChange = modDown,
                     onWhichModChange = { whichMod = it }
                 )
                 if (itemCount == modList.size - 1) {
@@ -70,8 +68,8 @@ fun KemoLesedingTheme(
             }
         }
         DocAbove(
-            fileShow,
-            onFileShowChange = { fileShow = !fileShow },
+            openMod,
+            onFileShowChange = modDown,
             modList[whichMod].docList
         )
     }
