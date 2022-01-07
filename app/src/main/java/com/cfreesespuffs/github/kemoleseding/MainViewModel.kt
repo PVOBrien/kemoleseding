@@ -8,14 +8,14 @@ class MainViewModel : ViewModel() {
 
     private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
     val currentScreen: LiveData<Screens> = _currentScreen
-    var isLanguage = false
+    var isSetswana = false
 
     fun setCurrentScreen(screen: Screens) {
         _currentScreen.value = screen
     }
 
-    fun changeLang() { // TODO: implement when we have Setswana
+    fun changeLanguage() { // TODO: implement when we have Setswana
         println("change, setLanguage()!")
-        isLanguage = !isLanguage
+        isSetswana = !isSetswana
     }
 }

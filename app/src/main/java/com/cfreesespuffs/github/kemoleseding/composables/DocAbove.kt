@@ -1,5 +1,6 @@
 package com.cfreesespuffs.github.kemoleseding.composables
 
+import android.content.pm.ActivityInfo
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.cfreesespuffs.github.kemoleseding.R
 import com.cfreesespuffs.github.kemoleseding.objModules.DocDetails
 import com.cfreesespuffs.github.kemoleseding.openFile
 import com.cfreesespuffs.github.kemoleseding.ui.theme.kmlLightBlue
@@ -30,6 +32,8 @@ fun DocAbove(
     onFileShowChange: (Boolean) -> Unit,
     passedDocDetails: List<DocDetails>,
 ) {
+
+
     val context = LocalContext.current
     AnimatedVisibility(
         isVisible,
@@ -74,23 +78,28 @@ fun DocAbove(
                                         onClickLabel = "This is a Document",
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
-                                            openFile(context, item.docName)
-                                        })
+                                            if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
+                                                println("play video ${item.docName}")
+                                            } else {
+                                                openFile(context, item.docName)
+                                            }
+                                        }
+                                    )
                             )
                             Text(
                                 text = item.docDescription,
                                 modifier = Modifier
-                                    .padding(
-                                        start = 12.dp,
-                                        end = 12.dp,
-                                        bottom = 8.dp
-                                    )
+                                    .padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                                     .clickable(
                                         enabled = true,
                                         onClickLabel = "Show the file",
                                         onClick = {
-                                            println("Click!")
-                                            openFile(context, item.docName)
+                                            println("ClICK TEXT ${item.docName}")
+                                            if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
+                                                println("play video ${item.docName}")
+                                            } else {
+                                                openFile(context, item.docName)
+                                            }
                                         }
                                     ),
                                 textAlign = TextAlign.Center

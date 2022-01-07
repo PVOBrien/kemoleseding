@@ -17,7 +17,8 @@ val modOne = Module(
     R.drawable.mod_one_pic,
     listOf(
         DocDetails("modanswerone", "Answers", R.drawable.key),
-        DocDetails("modonedisc", "Discussion\nQuestions", R.drawable.qpunc)
+        DocDetails("modonedisc", "Discussion\nQuestions", R.drawable.qpunc),
+        DocDetails("modoneplay", "Play Video", R.drawable.ic_baseline_play_circle_filled_24)
     )
 )
 
