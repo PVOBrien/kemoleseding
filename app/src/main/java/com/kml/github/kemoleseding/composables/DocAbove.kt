@@ -1,6 +1,7 @@
 package com.kml.github.kemoleseding.composables
 
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +24,7 @@ import com.kml.github.kemoleseding.R
 import com.kml.github.kemoleseding.Video
 import com.kml.github.kemoleseding.objModules.DocDetails
 import com.kml.github.kemoleseding.openFile
+import com.kml.github.kemoleseding.retrieveFile
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlYellow
 
@@ -83,6 +85,9 @@ fun DocAbove(
 //                                                intent.putExtra("video", Ur)
                                                 context.startActivity(intent)
                                             } else {
+                                                val uri: Uri = retrieveFile(context, item.docName)
+                                                println(uri.toString())
+                                                // TODO: openFile SRP. (single responsibility principle)
                                                 openFile(context, item.docName)
                                             }
                                         }

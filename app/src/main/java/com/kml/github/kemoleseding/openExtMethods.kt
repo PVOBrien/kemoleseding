@@ -3,8 +3,40 @@ package com.kml.github.kemoleseding
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.core.content.FileProvider
 import java.io.*
+
+fun retrieveFile(theContext: Context, incomingFile: String, itsExtension: String = "pdf"): Uri {
+    var inputStream: InputStream? = null
+    var outputStream: OutputStream? = null
+    lateinit var file: File
+
+    try {
+        file =
+            File("${theContext.getExternalFilesDir("kmlpdfFromFile")}" + "/$incomingFile.pdf")
+        if (!file.exists()) {
+            println("in file doesn't exist block")
+            inputStream = theContext.assets.open("pdfs/$incomingFile.$itsExtension")
+            outputStream = FileOutputStream(file)
+            copyFile(inputStream, outputStream)
+        }
+    } catch (ex: IOException) {
+        println("IOException " + ex.message)
+    } catch (ex: ActivityNotFoundException) {
+        println(ex.message)
+    } finally {
+        inputStream?.close()
+        outputStream?.flush()
+        outputStream?.close()
+    }
+
+    return FileProvider.getUriForFile(
+        theContext,
+        "com.kml.github.kemoleseding.provider",
+        file
+    )
+}
 
 fun openFile(
     theContext: Context,
