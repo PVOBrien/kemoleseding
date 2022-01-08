@@ -11,7 +11,7 @@
 
     <external-path
         name="kmlpdf2"
-        path="Android/data/com.cfreesespuffs.github.kemoleseding/files/kmlpdfFromFile" />
+        path="Android/data/com.kml.github.kemoleseding/files/kmlpdfFromFile" />
 
 </paths>
 

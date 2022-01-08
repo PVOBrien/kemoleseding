@@ -16,6 +16,19 @@
         <item name="title">@string/app_name</item>
     </style>
 
+    <style name="Theme.KemoLeseding.Dark" parent="Theme.KemoLeseding">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
     <style name="Theme.KemoLeseding.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.KemoLeseding.AppBarOverlay.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.KemoLeseding.AppBarOverlay.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.KemoLeseding.AppBarOverlay.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
