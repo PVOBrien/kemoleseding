@@ -4,9 +4,13 @@
         name="kmlpdf2"
         path="Android/data/com.kml.github.kemoleseding/files/kmlpdfFromFile" />
 
+    <external-path
+        name="kmlvideo"
+        path="Android/data/com.kml.github.kemoleseding/files/kmlVideo" />
+
 </paths>
 
 <!--  https://developer.android.com/training/secure-file-sharing/setup-sharing -->
-<!--  path can be "." OR "/" and (currently) in simple cases, does not matter. IDK what the name key is for. I have found no need of it anywhere.  -->
+<!--  path can be "." OR "/" and (currently) in simple cases, does not matter. The name key is for obfuscation. -->
 <!--  this is merely a list of available/accessible locations (folders, root, etc.) that files a) might be, and b) are permitted access from 3rd party/other apps  -->
 <!--  https://stackoverflow.com/questions/42516126/fileprovider-illegalargumentexception-failed-to-find-configured-root helped me realized that this file does nothing but provide a "vip list" of what is available to outside the app.-->

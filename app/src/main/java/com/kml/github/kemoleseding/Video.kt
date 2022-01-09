@@ -1,5 +1,6 @@
 package com.kml.github.kemoleseding
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +16,6 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
-import java.util.*
 
 class Video : ComponentActivity() {
 
@@ -27,9 +27,10 @@ class Video : ComponentActivity() {
             val context = LocalContext.current
             exoPlayer = remember(context) {
                 ExoPlayer.Builder(context).build().apply {
+                    val video = intent.extras?.get("video").toString()
                     val mediaItem =
 //                        MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-                        MediaItem.fromUri(Uri.parse("file:///android_asset/video/kmlteaser.mp4"))
+                        MediaItem.fromUri(Uri.parse(video))
                     this.addMediaItem(mediaItem)
                     this.addListener(object : Player.Listener {
                         override fun onIsPlayingChanged(isPlaying: Boolean) {

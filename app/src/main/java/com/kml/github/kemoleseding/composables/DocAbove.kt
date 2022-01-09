@@ -20,11 +20,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.kml.github.kemoleseding.*
 import com.kml.github.kemoleseding.R
-import com.kml.github.kemoleseding.Video
 import com.kml.github.kemoleseding.objModules.DocDetails
-import com.kml.github.kemoleseding.openFile
-import com.kml.github.kemoleseding.retrieveFile
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlYellow
 
@@ -80,15 +78,16 @@ fun DocAbove(
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
+//                                                val uri = fileCreateAndUri(context, "kmlteaser", "mp4")
+                                                val uri = fileCreateAndUriVideo(context, "", "mp4")
                                                 println("play video ${item.docName}")
                                                 val intent = Intent(context, Video::class.java)
-//                                                intent.putExtra("video", Ur)
+                                                intent.putExtra("video", uri.toString())
                                                 context.startActivity(intent)
                                             } else {
-                                                val uri: Uri = retrieveFile(context, item.docName)
+                                                val uri: Uri = fileCreateAndUri(context, item.docName)
                                                 println(uri.toString())
-                                                // TODO: openFile SRP. (single responsibility principle)
-                                                openFile(context, item.docName)
+                                                openFile(context, uri)
                                             }
                                         }
                                     )
@@ -105,7 +104,8 @@ fun DocAbove(
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
                                                 println("play video ${item.docName}")
                                             } else {
-                                                openFile(context, item.docName)
+                                                val uri = fileCreateAndUri(context, item.docName)
+                                                openFile(context, uri)
                                             }
                                         }
                                     ),

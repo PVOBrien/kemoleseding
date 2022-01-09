@@ -3,6 +3,8 @@
     package="com.kml.github.kemoleseding">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+<!-- https://stackoverflow.com/questions/16773348/set-custom-folder-android-download-manager -->
 
     <application
         android:allowBackup="true"
