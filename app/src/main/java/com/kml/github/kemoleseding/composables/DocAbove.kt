@@ -22,11 +22,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.kml.github.kemoleseding.*
 import com.kml.github.kemoleseding.R
 import com.kml.github.kemoleseding.objModules.DocDetails
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlYellow
+import java.io.File
 
 @ExperimentalAnimationApi
 @Composable
@@ -79,28 +81,30 @@ fun DocAbove(
                                     .size(40.dp)
                                     .clickable(
                                         enabled = true,
-                                        onClickLabel = "This is a Document",
+                                        onClickLabel = "This is a File",
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
-                                            if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
-
-                                                openDialog.value = true
-
+                                            val file = File("${context.getExternalFilesDir("Movies")}" + "/bbb.mp4")
+                                            if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && !file.exists()) {
+                                                println("File DOES NOT EXIST.")
+                                                openDialog.value = !file.exists()
+                                            }  else if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && file.exists()) {
+                                                println("File DID EXIST. Play Vid.")
 //                                                val uri = fileCreateAndUriVideo(context, "https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg", "mp4")
-//                                                val uri = fileCreateAndUriVideo(
-//                                                    context,
-//                                                    "kmlteaser",
-//                                                    "mp4"
-//                                                )
-//                                                println("going to play video...")
-//                                                val intent = Intent(context, Video::class.java)
-//                                                intent.putExtra("video", uri.toString())
-//                                                context.startActivity(intent)
+                                                val uri = fileCreateAndUriVideo(
+                                                    context,
+                                                    "kmlteaser",
+                                                    "mp4"
+                                                )
+                                                println("going to play video...")
+                                                val intent = Intent(context, Video::class.java)
+                                                intent.putExtra("video", uri.toString())
+                                                context.startActivity(intent)
                                             } else {
                                                 val uri: Uri =
                                                     fileCreateAndUri(context, item.docName)
-//                                                println(uri.toString())
                                                 openFile(context, uri)
+//                                                openFile(context, file.toUri())
                                             }
                                         }
                                     )
@@ -141,7 +145,10 @@ fun DocAbove(
 }
 
 @Composable
-fun AlertDialog(context: Context, openD: MutableState<Boolean>) { // context ready for Toast making https://www.geeksforgeeks.org/alertdialog-in-android-using-jetpack-compose/
+fun AlertDialog(
+    context: Context,
+    openD: MutableState<Boolean>
+) { // context ready for Toast making https://www.geeksforgeeks.org/alertdialog-in-android-using-jetpack-compose/
     if (openD.value) {
         AlertDialog(
             onDismissRequest = { openD.value = false },
@@ -150,7 +157,18 @@ fun AlertDialog(context: Context, openD: MutableState<Boolean>) { // context rea
             confirmButton = {
                 TextButton(onClick = {
                     openD.value = false
+
                     /*TODO: Download File*/
+
+                    val uri = fileCreateAndUriVideo(context, "bbb", "mp4")
+//                  val uri = fileCreateAndUriVideo( context, "kmlteaser", "mp4"
+                    println("going to play video...")
+                    val intent = Intent(context, Video::class.java)
+                    intent.putExtra("video", uri.toString())
+                    context.startActivity(intent)
+
+                    /*TODO: Download File*/
+
                 }) {
                     Text(text = "Do the DL")
                 }

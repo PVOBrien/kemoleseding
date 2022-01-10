@@ -52,10 +52,8 @@ fun fileCreateAndUriVideo(
     try {
         file =
             File("${context.getExternalFilesDir("Movies")}" + "/$incomingFile.$itsExtension")
+        println(file.toString())
         if (!file.exists()) {
-
-
-
             println("THIS IS fCAUV: in file doesn't exist block")
             inputStream = context.assets.open("video/$incomingFile.$itsExtension")
             outputStream = FileOutputStream(file)
