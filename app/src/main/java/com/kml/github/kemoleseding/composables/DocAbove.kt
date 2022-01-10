@@ -1,5 +1,7 @@
 package com.kml.github.kemoleseding.composables
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -12,10 +14,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,11 +36,14 @@ fun DocAbove(
     passedDocDetails: List<DocDetails>,
 ) {
     val context = LocalContext.current
+    val openDialog = remember { mutableStateOf(false) }
+
     AnimatedVisibility(
         isVisible,
         enter = slideInVertically() + fadeIn(),
         exit = slideOutVertically() + fadeOut(),
     ) {
+        AlertDialog(context = context, openDialog)
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -80,14 +83,22 @@ fun DocAbove(
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
+
+                                                openDialog.value = true
+
 //                                                val uri = fileCreateAndUriVideo(context, "https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg", "mp4")
-                                                val uri = fileCreateAndUriVideo(context, "kmlteaser", "mp4")
-                                                println("going to play video...")
-                                                val intent = Intent(context, Video::class.java)
-                                                intent.putExtra("video", uri.toString())
-                                                context.startActivity(intent)
+//                                                val uri = fileCreateAndUriVideo(
+//                                                    context,
+//                                                    "kmlteaser",
+//                                                    "mp4"
+//                                                )
+//                                                println("going to play video...")
+//                                                val intent = Intent(context, Video::class.java)
+//                                                intent.putExtra("video", uri.toString())
+//                                                context.startActivity(intent)
                                             } else {
-                                                val uri: Uri = fileCreateAndUri(context, item.docName)
+                                                val uri: Uri =
+                                                    fileCreateAndUri(context, item.docName)
 //                                                println(uri.toString())
                                                 openFile(context, uri)
                                             }
@@ -126,5 +137,29 @@ fun DocAbove(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun AlertDialog(context: Context, openD: MutableState<Boolean>) { // context ready for Toast making https://www.geeksforgeeks.org/alertdialog-in-android-using-jetpack-compose/
+    if (openD.value) {
+        AlertDialog(
+            onDismissRequest = { openD.value = false },
+            title = { Text(text = "Potential File Download...") },
+            text = { Text(text = "Text Text") },
+            confirmButton = {
+                TextButton(onClick = {
+                    openD.value = false
+                    /*TODO: Download File*/
+                }) {
+                    Text(text = "Do the DL")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { openD.value = false }) {
+                    Text(text = "Cancel")
+                }
+            }
+        )
     }
 }
