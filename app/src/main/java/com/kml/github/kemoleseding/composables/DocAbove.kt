@@ -78,7 +78,6 @@ fun DocAbove(
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24) {
-//                                                val uri = fileCreateAndUri(context, "kmlteaser", "mp4")
 //                                                val uri = fileCreateAndUriVideo(context, "https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg", "mp4")
                                                 val uri = fileCreateAndUriVideo(context, "kmlteaser", "mp4")
                                                 println("going to play video...")
@@ -87,7 +86,7 @@ fun DocAbove(
                                                 context.startActivity(intent)
                                             } else {
                                                 val uri: Uri = fileCreateAndUri(context, item.docName)
-                                                println(uri.toString())
+//                                                println(uri.toString())
                                                 openFile(context, uri)
                                             }
                                         }
