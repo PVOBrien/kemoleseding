@@ -2,6 +2,8 @@ package com.kml.github.kemoleseding.composables
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import android.util.Log.DEBUG
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

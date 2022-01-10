@@ -53,6 +53,9 @@ fun fileCreateAndUriVideo(
         file =
             File("${context.getExternalFilesDir("Movies")}" + "/$incomingFile.$itsExtension")
         if (!file.exists()) {
+
+
+
             println("THIS IS fCAUV: in file doesn't exist block")
             inputStream = context.assets.open("video/$incomingFile.$itsExtension")
             outputStream = FileOutputStream(file)
@@ -69,13 +72,16 @@ fun fileCreateAndUriVideo(
     }
 
     // ======== while getting it to DL in the first place. TODO: move back into if block. =========
+    // followed https://camposha.info/android-examples/android-downloadmanager/#gsc.tab=0
 
     var dlId: Long = 0
 
     val newBroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if (id == dlId) Log.d("Download", "Complete")
+            if (id == dlId) {
+                Log.d("Download", "Complete")
+            }
         }
     }
 
@@ -86,9 +92,9 @@ fun fileCreateAndUriVideo(
 
     val request = DownloadManager.Request(uri)
         .setDescription("Kml DL_Description")
-        .setTitle("KmL DL_Title.jpg")
+        .setTitle("bbb.$itsExtension")
         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-        .setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MOVIES, "voyager.jpg")
+        .setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MOVIES, "bbb.$itsExtension")
 
     val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 //            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
@@ -97,6 +103,7 @@ fun fileCreateAndUriVideo(
 //            inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
 
     context.registerReceiver(newBroadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
 
     // ============================================
 
