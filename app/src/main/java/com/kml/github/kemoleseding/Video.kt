@@ -28,17 +28,20 @@ class Video : ComponentActivity() {
             exoPlayer = remember(context) {
                 ExoPlayer.Builder(context).build().apply {
                     val video = intent.extras?.get("video").toString()
+                    println("This is the video intent: $video")
                     val mediaItem =
-//                        MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-                        MediaItem.fromUri(Uri.parse(video))
+//                        MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") // sanity check. DO NOT REMOVE
+                        MediaItem.fromUri(Uri.parse("file:///android_asset/video/kmlteaser.mp4"))
+//                        MediaItem.fromUri(Uri.parse(video))
                     this.addMediaItem(mediaItem)
                     this.addListener(object : Player.Listener {
                         override fun onIsPlayingChanged(isPlaying: Boolean) {
                             super.onIsPlayingChanged(isPlaying)
                             if (isPlaying) {
-                                val positionOfVideo = (currentPosition+1) / 1000
+                                val positionOfVideo = (currentPosition + 1) / 1000
                                 println("what is contentPos in SSS.nnn : $positionOfVideo")
-                                val assetSys : Array<String> = context.assets.list("video") as Array<String>
+                                val assetSys: Array<String> =
+                                    context.assets.list("video") as Array<String>
                                 println("Here are assets: " + assetSys.contentToString())
                             }
                         }

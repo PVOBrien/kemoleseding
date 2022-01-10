@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 <!-- https://stackoverflow.com/questions/16773348/set-custom-folder-android-download-manager -->
+<!-- https://www.androidhive.info/2012/04/android-downloading-file-by-showing-progress-bar/ not so related... -->
 
     <application
         android:allowBackup="true"

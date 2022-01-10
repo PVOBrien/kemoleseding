@@ -41,7 +41,6 @@ fun KmLApp() {
     val scope = rememberCoroutineScope()
     val currentScreen by viewModel.currentScreen.observeAsState()
     var openMod by rememberSaveable { mutableStateOf(false) } // https://developer.android.com/reference/kotlin/androidx/compose/runtime/saveable/package-summary#rememberSaveable(kotlin.Array,androidx.compose.runtime.saveable.Saver,kotlin.String,kotlin.Function0)
-//    var openMod = rememberSaveable {mutableStateOf(false)}
 
     @Composable
     fun topBar(title: String = "", buttonIcon: ImageVector) {

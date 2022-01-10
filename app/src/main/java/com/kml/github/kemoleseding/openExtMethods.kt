@@ -1,12 +1,12 @@
 package com.kml.github.kemoleseding
 
+import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
 import java.io.*
-import java.net.URL
 
 fun fileCreateAndUri (context: Context, incomingFile: String, itsExtension: String = "pdf"): Uri {
     var inputStream: InputStream? = null
@@ -44,16 +44,25 @@ fun fileCreateAndUri (context: Context, incomingFile: String, itsExtension: Stri
 }
 
 fun fileCreateAndUriVideo (context: Context, incomingFile: String, itsExtension: String = "mp4"): Uri {
-    var inputStream: BufferedInputStream? = null
+    var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
     lateinit var file: File
 
     try {
         file =
-            File("${context.getExternalFilesDir("kmlVideo")}" + "/bigbunny.$itsExtension")
+            File("${context.getExternalFilesDir("kmlVideo")}" + "/$incomingFile.$itsExtension")
         if (!file.exists()) {
-            println("in file doesn't exist block")
-            inputStream = BufferedInputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
+            println("THIS IS fCAUV: in file doesn't exist block")
+//            val downloadManager : DownloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
+//            val uri = Uri.parse(incomingFile)
+//            val request: DownloadManager.Request = DownloadManager.Request(uri)
+//            request.setDescription("Kml DL_Description").setTitle("KmL DL_Title.jpg")
+//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+//            request.setDestinationInExternalFilesDir(context, context.getExternalFilesDir("kmlVideo").toString(), "")
+//            downloadManager.enqueue(request)
+//            inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
+            inputStream = context.assets.open("video/$incomingFile.$itsExtension")
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
         }
