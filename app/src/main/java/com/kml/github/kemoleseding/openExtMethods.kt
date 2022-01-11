@@ -75,14 +75,13 @@ fun fileCreateAndUriVideo(
 //        val uri = Uri.parse(incomingFile)
 
             val request = DownloadManager.Request(uri)
-                .setDescription("Kml DL_Description")
-                .setTitle("bbb.$itsExtension")
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
                 .setDestinationInExternalFilesDir(
                     context,
                     Environment.DIRECTORY_MOVIES,
-                    "bbb.$itsExtension"
-                )
+                    "bbbDest.$itsExtension")
+                .setDescription("Kml DL_Description")
+                .setTitle("bbbTitle.$itsExtension")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
 
             val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 //  val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")

@@ -30,8 +30,8 @@ class Video : ComponentActivity() {
                     println("This is the video intent: $video")
                     val mediaItem =
 //                        MediaItem.fromUri("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") // sanity check. DO NOT REMOVE
-                        MediaItem.fromUri(Uri.parse("file:///android_asset/video/kmlteaser.mp4"))
-//                        MediaItem.fromUri(Uri.parse(video))
+//                        MediaItem.fromUri(Uri.parse("file:///android_asset/video/kmlteaser.mp4"))
+                        MediaItem.fromUri(Uri.parse(video))
                     this.addMediaItem(mediaItem)
                     this.addListener(object : Player.Listener {
                         override fun onIsPlayingChanged(isPlaying: Boolean) {

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import android.util.Log.DEBUG
 import androidx.compose.animation.*
@@ -85,7 +86,13 @@ fun DocAbove(
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
                                             val file =
-                                                File("${context.getExternalFilesDir("Movies")}" + "/bbb.mp4")
+                                                File("${context.getExternalFilesDir("Movies")}" + "/bbbDest.mp4")
+                                            if (file.exists()) {
+                                                println("bbbDest is in Movies.")
+                                                val intent = Intent(context, Video::class.java)
+                                                intent.putExtra("video", file.toURI().toString())
+                                                context.startActivity(intent)
+                                            }
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && !file.exists()) {
 //                                                println("File DOES NOT EXIST.")
 //                                                openDialog.value = !file.exists()
@@ -102,10 +109,10 @@ fun DocAbove(
                                                 intent.putExtra("video", uri.toString())
                                                 context.startActivity(intent)
                                             } else {
-                                                println("Opening PDF")
-                                                val uri: Uri =
-                                                    fileCreateAndUri(context, item.docName)
-                                                openFile(context, uri) // OR openFile(context, file.toUri())
+//                                                println("Opening PDF")
+//                                                val uri: Uri =
+//                                                    fileCreateAndUri(context, item.docName)
+//                                                openFile(context, uri) // OR openFile(context, file.toUri())
                                             }
                                         }
                                     )
