@@ -58,6 +58,44 @@ fun fileCreateAndUriVideo(
             inputStream = context.assets.open("video/$incomingFile.$itsExtension")
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
+
+            // *** Download Manager, basic *** // // followed https://camposha.info/android-examples/android-downloadmanager/#gsc.tab=0
+//            var dlId: Long = 0
+//            val newBroadcastReceiver = object : BroadcastReceiver() {
+//                override fun onReceive(context: Context?, intent: Intent?) {
+//                    val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+//                    if (id == dlId) {
+//                        Log.d("Download", "Complete")
+//                    }
+//                }
+//            }
+
+            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+//        Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
+//        val uri = Uri.parse(incomingFile)
+
+            val request = DownloadManager.Request(uri)
+                .setDescription("Kml DL_Description")
+                .setTitle("bbb.$itsExtension")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+                .setDestinationInExternalFilesDir(
+                    context,
+                    Environment.DIRECTORY_MOVIES,
+                    "bbb.$itsExtension"
+                )
+
+            val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//  val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
+
+            downloadManager.enqueue(request)
+
+//            dlId = downloadManager.enqueue(request)
+////  inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
+//
+//            context.registerReceiver(
+//                newBroadcastReceiver,
+//                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+//            )
         }
     } catch (ex: IOException) {
         println("IOException " + ex.message)
@@ -69,49 +107,15 @@ fun fileCreateAndUriVideo(
         outputStream?.close()
     }
 
-    // ======== while getting it to DL in the first place. TODO: move back into if block. =========
-    // followed https://camposha.info/android-examples/android-downloadmanager/#gsc.tab=0
-
-    var dlId: Long = 0
-
-    val newBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if (id == dlId) {
-                Log.d("Download", "Complete")
-            }
-        }
-    }
-
-    val uri =
-//        Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
-        Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-//        val uri = Uri.parse(incomingFile)
-
-    val request = DownloadManager.Request(uri)
-        .setDescription("Kml DL_Description")
-        .setTitle("bbb.$itsExtension")
-        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-        .setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MOVIES, "bbb.$itsExtension")
-
-    val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-//            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
-
-    dlId = downloadManager.enqueue(request)
-//            inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
-
-    context.registerReceiver(newBroadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
-
-    // ============================================
+    println("File name: $file")
 
     return file.toUri()
-
-//    return FileProvider.getUriForFile(
-//        context,
-//        "com.kml.github.kemoleseding.provider",
-//        file
-//    )
+    /* OR
+    return FileProvider.getUriForFile(
+        context,
+        "com.kml.github.kemoleseding.provider",
+        file
+    ) */
 }
 
 fun openFile(
@@ -133,7 +137,6 @@ fun openFile(
     )
     context.startActivity(intent)
 }
-
 
 private fun copyFile(input: InputStream, output: OutputStream) {
     println("in copyfile")
