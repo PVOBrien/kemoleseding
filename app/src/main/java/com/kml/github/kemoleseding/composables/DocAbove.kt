@@ -85,18 +85,11 @@ fun DocAbove(
                                         onClickLabel = "This is a File",
                                         onClick = {
                                             println("CLICK PIC ${item.docName}")
-                                            val file =
-                                                File("${context.getExternalFilesDir("Movies")}" + "/bbbDest.mp4")
-                                            if (file.exists()) {
-                                                println("bbbDest is in Movies.")
-                                                val intent = Intent(context, Video::class.java)
-                                                intent.putExtra("video", file.toURI().toString())
-                                                context.startActivity(intent)
-                                            }
+                                            val file = File("${context.getExternalFilesDir("Movies")}" + "/bbbDest.mp4")
                                             if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && !file.exists()) {
-//                                                println("File DOES NOT EXIST.")
-//                                                openDialog.value = !file.exists()
-//                                            }else if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && file.exists()) {
+                                                    println("$file is NOT in Movies.")
+                                                    openDialog.value = !file.exists()
+                                            } else if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && file.exists()) {
                                                 println("File DID EXIST. Play Vid.")
 //                                                val uri = fileCreateAndUriVideo(context, "https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg", "mp4")
                                                 val uri = fileCreateAndUriVideo(
@@ -109,10 +102,9 @@ fun DocAbove(
                                                 intent.putExtra("video", uri.toString())
                                                 context.startActivity(intent)
                                             } else {
-//                                                println("Opening PDF")
-//                                                val uri: Uri =
-//                                                    fileCreateAndUri(context, item.docName)
-//                                                openFile(context, uri) // OR openFile(context, file.toUri())
+                                                println("Opening PDF")
+                                                val uri: Uri = fileCreateAndUri(context, item.docName) // TODO: best practices https://developer.android.com/training/permissions/requesting
+                                                openFile(context, uri) // OR openFile(context, file.toUri())
                                             }
                                         }
                                     )
