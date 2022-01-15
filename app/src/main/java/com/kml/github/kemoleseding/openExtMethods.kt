@@ -1,10 +1,11 @@
 package com.kml.github.kemoleseding
 
 import android.app.DownloadManager
-import android.content.*
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.*
@@ -106,7 +107,23 @@ fun fileCreateAndUriVideo(
         outputStream?.close()
     }
 
-    println("File name: $file")
+    // ======== while getting it to DL in the first place. TODO: move back into if block. =========
+
+    val downloadManager: DownloadManager =
+        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
+    val uri =
+//        Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
+    Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
+//            val uri = Uri.parse(incomingFile)
+    val request: DownloadManager.Request = DownloadManager.Request(uri)
+//    request.setDescription("Kml DL_Description").setTitle("KmL DL_Title.jpg")
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+    request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MOVIES, "FromDM.jpg")
+    downloadManager.enqueue(request)
+//            inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
+
+    // ============================================
 
     return file.toUri()
     /* OR
