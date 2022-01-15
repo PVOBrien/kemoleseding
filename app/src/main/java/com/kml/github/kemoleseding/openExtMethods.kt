@@ -55,7 +55,8 @@ fun fileCreateAndUriVideo(
             File("${context.getExternalFilesDir("Movies")}" + "/$incomingFile.$itsExtension")
         println(file.toString())
         if (!file.exists()) {
-            println("THIS IS fCAUV: in file doesn't exist block")
+            downloadUri(context)
+            println("THIS IS fCAUV: video doesn't exist block")
             inputStream = context.assets.open("video/$incomingFile.$itsExtension")
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
@@ -70,32 +71,6 @@ fun fileCreateAndUriVideo(
 //                    }
 //                }
 //            }
-
-            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-//        Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
-//        val uri = Uri.parse(incomingFile)
-
-            val request = DownloadManager.Request(uri)
-                .setDestinationInExternalFilesDir(
-                    context,
-                    Environment.DIRECTORY_MOVIES,
-                    "bbbDest.$itsExtension")
-                .setDescription("Kml DL_Description")
-                .setTitle("bbbTitle.$itsExtension")
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-
-            val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-//  val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
-
-            downloadManager.enqueue(request)
-
-//            dlId = downloadManager.enqueue(request)
-////  inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
-//
-//            context.registerReceiver(
-//                newBroadcastReceiver,
-//                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-//            )
         }
     } catch (ex: IOException) {
         println("IOException " + ex.message)
@@ -106,24 +81,6 @@ fun fileCreateAndUriVideo(
         outputStream?.flush()
         outputStream?.close()
     }
-
-    // ======== while getting it to DL in the first place. TODO: move back into if block. =========
-
-    val downloadManager: DownloadManager =
-        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-//            val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
-    val uri =
-//        Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
-    Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
-//            val uri = Uri.parse(incomingFile)
-    val request: DownloadManager.Request = DownloadManager.Request(uri)
-//    request.setDescription("Kml DL_Description").setTitle("KmL DL_Title.jpg")
-    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-    request.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_MOVIES, "FromDM.jpg")
-    downloadManager.enqueue(request)
-//            inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
-
-    // ============================================
 
     return file.toUri()
     /* OR
@@ -162,4 +119,35 @@ private fun copyFile(input: InputStream, output: OutputStream) {
         output.write(buffer, 0, read)
         read = input.read(buffer)
     }
+}
+
+private fun downloadUri(context: Context) {
+    val uri =
+        Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+//        Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
+//        val uri = Uri.parse(incomingFile)
+
+    val request = DownloadManager.Request(uri)
+        .setDestinationInExternalFilesDir(
+            context,
+            Environment.DIRECTORY_MOVIES,
+            "bbbDest.mp4"
+        )
+        .setDescription("Kml DL_Description")
+        .setTitle("bbbTitle.mp4")
+        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+
+    val downloadManager =
+        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//  val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
+
+    downloadManager.enqueue(request)
+
+//            dlId = downloadManager.enqueue(request)
+////  inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
+//
+//            context.registerReceiver(
+//                newBroadcastReceiver,
+//                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+//            )
 }

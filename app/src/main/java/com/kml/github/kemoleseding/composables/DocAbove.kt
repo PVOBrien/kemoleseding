@@ -93,9 +93,6 @@ fun DocAbove(
                                                 println("File DID EXIST. Play Vid.")
                                                 println("File DOES NOT EXIST.")
                                                 openDialog.value = !file.exists()
-//                                            }else if (item.picType == R.drawable.ic_baseline_play_circle_filled_24 && file.exists()) {
-//                                                println("File DID EXIST. Play Vid.")
-//                                                val uri = fileCreateAndUriVideo(context, "https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg", "mp4")
                                                 val uri = fileCreateAndUriVideo(
                                                     context,
                                                     "kmlteaser",

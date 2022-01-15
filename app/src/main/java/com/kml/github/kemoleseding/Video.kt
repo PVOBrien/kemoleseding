@@ -2,6 +2,7 @@ package com.kml.github.kemoleseding
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,9 +40,10 @@ class Video : ComponentActivity() {
                             if (isPlaying) {
                                 val positionOfVideo = (currentPosition + 1) / 1000
                                 println("what is contentPos in SSS.nnn : $positionOfVideo")
-                                val assetSys: Array<String> =
-                                    context.assets.list("video") as Array<String>
-                                println("Here are assets: " + assetSys.contentToString())
+//                                val assetSys: Array<String> = context.assets.list("video") as Array<String>
+                                val assetSysMovies: Array<String> = getExternalFilesDir(Environment.DIRECTORY_MOVIES)?.list() as Array<String> // https://developer.android.com/training/data-storage/app-specific
+//                                println("Here are assets: " + assetSys.contentToString() )
+                                println("Here are Movie assets: " + assetSysMovies.contentToString())
                             }
                         }
                     })
