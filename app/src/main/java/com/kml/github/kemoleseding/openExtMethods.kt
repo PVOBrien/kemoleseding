@@ -197,9 +197,12 @@ private fun downloadVideo(context: Context, s3Key: String, file: File) {
 //    )
 
     val aFile = File("${context.getExternalFilesDir("Movies")}/modOneSubSETS.mp4")
-    Amplify.Storage.downloadFile("modOneSubSETS.mp4", aFile,
-        { Log.i("MyAmplifyApp", "Successfully downloaded: ${it.file.name}") },
-        { Log.e("MyAmplifyApp",  "Download Failure", it) }
+    val options = StorageDownloadFileOptions.builder().accessLevel()
+
+    Amplify.Storage.downloadFile("modOneSubSETS.mp4", aFile, options,
+        { Log.i("S3.download", "% Download: ${it.fractionCompleted}") },
+        { Log.i("S3.download", "Successfully downloaded: ${it.file.name}") },
+        { Log.e("S3.download",  "Download Failure", it) }
     )
 }
 
