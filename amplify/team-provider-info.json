@@ -10,6 +10,30 @@
       "StackName": "amplify-kemoleseding-dev-145030",
       "StackId": "arn:aws:cloudformation:us-west-2:744127941101:stack/amplify-kemoleseding-dev-145030/8b7ac7a0-7655-11ec-8764-06a3ee04cdc3",
       "AmplifyAppId": "db8ok6rjkkpx"
+    },
+    "categories": {
+      "auth": {
+        "true": {},
+        "kemolesedingef85d986": {}
+      }
+    }
+  },
+  "kmlmain": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-kemoleseding-kmlmain-164805-authRole",
+      "UnauthRoleArn": "arn:aws:iam::744127941101:role/amplify-kemoleseding-kmlmain-164805-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::744127941101:role/amplify-kemoleseding-kmlmain-164805-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-kemoleseding-kmlmain-164805-deployment",
+      "UnauthRoleName": "amplify-kemoleseding-kmlmain-164805-unauthRole",
+      "StackName": "amplify-kemoleseding-kmlmain-164805",
+      "StackId": "arn:aws:cloudformation:us-west-2:744127941101:stack/amplify-kemoleseding-kmlmain-164805/f7945270-7665-11ec-ad5e-06059cb3b02d",
+      "AmplifyAppId": "db8ok6rjkkpx"
+    },
+    "categories": {
+      "auth": {
+        "kemolesedingef85d986": {}
+      }
     }
   }
 }

@@ -95,13 +95,13 @@ fun DocAbove(
                                                 openDialog.value = !file.exists()
                                                 val uri = fileCreateAndUriVideo(
                                                     context,
-                                                    "kmlteaser",
+                                                    "modOneSubSETS.mp4",
                                                     "mp4"
                                                 )
                                                 println("going to play video...")
                                                 val intent = Intent(context, Video::class.java)
                                                 intent.putExtra("video", uri.toString())
-                                                context.startActivity(intent)
+//                                                context.startActivity(intent)
                                             } else {
                                                 println("Opening PDF")
                                                 val uri: Uri = fileCreateAndUri(context, item.docName) // TODO: best practices https://developer.android.com/training/permissions/requesting

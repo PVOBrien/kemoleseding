@@ -1,0 +1,14 @@
+{
+  "resourceName": "kmls3dl",
+  "policyUUID": "3ed0b60a",
+  "bucketName": "kmlvideos3fordl",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "groupAccess": {}
+}

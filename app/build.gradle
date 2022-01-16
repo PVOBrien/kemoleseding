@@ -78,6 +78,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
+    implementation 'com.amplifyframework:aws-auth-cognito:1.31.1'
     implementation 'com.amplifyframework:core:1.31.1'
     implementation 'com.amplifyframework:aws-storage-s3:1.31.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'

@@ -1,7 +1,6 @@
 package com.kml.github.kemoleseding
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -13,15 +12,13 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.amplifyframework.AmplifyException
-import com.amplifyframework.core.Amplify
-import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.kml.github.kemoleseding.composables.*
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 import kotlinx.coroutines.launch
@@ -30,14 +27,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        try {
-            Amplify.addPlugin(AWSS3StoragePlugin())
-            Log.i("S3", "Initialized Amplify")
-        }  catch (error: AmplifyException) {
-            Log.e("Amplify", "Amplify Error: ", error)
-        }
-
         setContent {
+            loginToAWS(LocalContext.current)
             KmLApp()
         }
     }
