@@ -58,7 +58,7 @@ fun MCard(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 4.em,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Color.Black
             )
             ModuleCardBody(
                 summary,
