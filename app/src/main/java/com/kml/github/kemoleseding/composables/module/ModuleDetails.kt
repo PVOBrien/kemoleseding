@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.em
+import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 
 @Composable
@@ -21,7 +22,7 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
     Column(
         Modifier
             .padding(horizontal = Dp(6.0F))
-            .background(kmlRed)
+            .background(kmlLightBlue)
             .animateContentSize(
                 animationSpec = spring(
                     dampingRatio = Spring.DampingRatioNoBouncy
@@ -32,10 +33,10 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
             text = theSummary,
             maxLines = if (isExpanded) Int.MAX_VALUE else 6,
             overflow = TextOverflow.Ellipsis,
-            color = Color.White,
+//            color = Color.White,
             fontFamily = FontFamily.Serif,
             fontSize = 3.em,
-            modifier = Modifier.background(kmlRed)
+            modifier = Modifier.background(kmlLightBlue)
         )
     }
 }

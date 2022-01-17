@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Environment
 import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -48,8 +47,7 @@ fun fileCreateAndUri(context: Context, incomingFile: String, itsExtension: Strin
 
 fun fileCreateAndUriVideo(
     context: Context,
-    incomingFile: String,
-    itsExtension: String = "mp4"
+    incomingFile: String
 ): Uri {
     var inputStream: InputStream? = null
     var outputStream: OutputStream? = null
@@ -57,25 +55,15 @@ fun fileCreateAndUriVideo(
 
     try {
         file =
-            File("${context.getExternalFilesDir("Movies")}" + "/$incomingFile.$itsExtension")
+            File("${context.getExternalFilesDir("Movies")}" + "/$incomingFile")
         println(file.toString())
         if (!file.exists()) {
-            downloadVideo(context, "modOneSubSETS.mp4", file)
+            downloadVideo(context, incomingFile)
             println("THIS IS fCAUV: video doesn't exist block")
-            inputStream = context.assets.open("video/$incomingFile.$itsExtension")
+            inputStream = context.assets.open("video/$incomingFile")
             outputStream = FileOutputStream(file)
             copyFile(inputStream, outputStream)
 
-            // *** Download Manager, basic *** // // followed https://camposha.info/android-examples/android-downloadmanager/#gsc.tab=0
-//            var dlId: Long = 0
-//            val newBroadcastReceiver = object : BroadcastReceiver() {
-//                override fun onReceive(context: Context?, intent: Intent?) {
-//                    val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-//                    if (id == dlId) {
-//                        Log.d("Download", "Complete")
-//                    }
-//                }
-//            }
         }
     } catch (ex: IOException) {
         println("IOException " + ex.message)
@@ -88,12 +76,6 @@ fun fileCreateAndUriVideo(
     }
 
     return file.toUri()
-    /* OR
-    return FileProvider.getUriForFile(
-        context,
-        "com.kml.github.kemoleseding.provider",
-        file
-    ) */
 }
 
 fun openFile(
@@ -135,24 +117,6 @@ fun loginToAWS(context: Context) {
     } catch (error: AmplifyException) {
         Log.e("Amplify", "Amplify Error: ", error)
     }
-//    val emailSetup = AuthSignUpOptions.builder()
-//        .userAttribute(AuthUserAttributeKey.email(), "mxpxp86@hotmail.com")
-//        .build()
-//    Amplify.Auth.signUp("username", "Password123", emailSetup,
-//        { Log.i("AuthQuickStart", "Sign up succeeded: $it") },
-//        { Log.e ("AuthQuickStart", "Sign up failed", it) }
-//    )
-//    Amplify.Auth.confirmSignUp(
-//        "username", "554440",
-//        { result ->
-//            if (result.isSignUpComplete) {
-//                Log.i("AuthQuickstart", "Confirm signUp succeeded")
-//            } else {
-//                Log.i("AuthQuickstart","Confirm sign up not complete")
-//            }
-//        },
-//        { Log.e("AuthQuickstart", "Failed to confirm sign up", it) }
-//    )
 
     Amplify.Auth.signIn("username", "Password123",
         { result ->
@@ -166,66 +130,33 @@ fun loginToAWS(context: Context) {
     )
 }
 
-private fun downloadVideo(context: Context, s3Key: String, file: File) {
-//    val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-//        Uri.parse("https://raw.githubusercontent.com/Oclemy/SampleJSON/master/spacecrafts/voyager.jpg")
-//        val uri = Uri.parse(incomingFile)
-    println("in downloadVideo")
-
-    val exampleFile = File(Environment.DIRECTORY_MOVIES, "ExampleKey.mp4")
-//    exampleFile.writeText("Example file contents")
-
-//        val optionsUpload = StorageUploadFileOptions.defaultInstance()
-//        Amplify.Storage.uploadFile("ExampleKey", exampleFile, optionsUpload,
-//            { Log.i("MyAmplifyApp", "Fraction completed: ${it.fractionCompleted}") },
-//            { Log.i("MyAmplifyApp", "Successfully uploaded: ${it.key}") },
-//            { Log.e("MyAmplifyApp", "Upload failed", it) }
-//        )
-//
+private fun downloadVideo(context: Context, s3Key: String) {
+    println("in downloadVideo, key: $s3Key")
 
     Amplify.Storage.getUrl(
-        "modOneSubSETS.mp4",
+        s3Key,
         { Log.i("S3", "Successfully generated: ${it.url}") },
         { Log.e("S3", "URL generation failure", it) }
     )
 
-//    val options = StorageDownloadFileOptions.defaultInstance()
-//    Amplify.Storage.downloadFile("ExampleKey", file, options,
-//        { Log.i("S3.mp4dl", "Fraction completed: ${it.fractionCompleted}") },
-//        { Log.i("S3.mp4dl", "Successfully downloaded: ${it.file.name}") },
-//        { Log.e("S3.mp4dl", "Download Failure", it) }
-//    )
+// =************************************=
 
-    val aFile = File("${context.getExternalFilesDir("Movies")}/modOneSubSETS.mp4")
-    val options = StorageDownloadFileOptions.builder().accessLevel()
+// TODO: https://github.com/nimran/Amazon-S3-Integration-in-Android for using S3 TransferUtility, instead of logging in. :)
+// OR https://docs.aws.amazon.com/mobile/sdkforxamarin/developerguide/getting-started-store-retrieve-s3-transferutility.html
+//
+//    val aFile = File("${context.getExternalFilesDir("Movies")}/modOneSubSETS.mp4")
+//    val region = Region.getRegion(Regions.US_WEST_2)
+//    val credentials = BasicAWSCredentials("AKIA22QL3JHWZWUIOMGK", "wjuRVF8QfgrxbbVjMaNHCUiiMdUzIDVWIog54jKo")
+//    val staticCredentialsProvider = StaticCredentialsProvider(credentials)
+//    val options = StorageDownloadFileOptions.builder()......
 
-    Amplify.Storage.downloadFile("modOneSubSETS.mp4", aFile, options,
+// =************************************=
+
+    val aFile = File("${context.getExternalFilesDir("Movies")}/$s3Key")
+    val options = StorageDownloadFileOptions.defaultInstance()
+    Amplify.Storage.downloadFile(s3Key, aFile, options,
         { Log.i("S3.download", "% Download: ${it.fractionCompleted}") },
         { Log.i("S3.download", "Successfully downloaded: ${it.file.name}") },
         { Log.e("S3.download",  "Download Failure", it) }
     )
 }
-
-//    val request = DownloadManager.Request(uri)
-//        .setDestinationInExternalFilesDir(
-//            context,
-//            Environment.DIRECTORY_MOVIES,
-//            "bbbDest.mp4"
-//        )
-//        .setDescription("Kml DL_Description")
-//        .setTitle("bbbTitle.mp4")
-//        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-//
-//    val downloadManager =
-//        context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-//  val uri = Uri.parse("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny")
-//    downloadManager.enqueue(request)
-
-//            dlId = downloadManager.enqueue(request)
-////  inputStream = InputStream(URL("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny").openStream())
-//
-//            context.registerReceiver(
-//                newBroadcastReceiver,
-//                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-//            )
-//}
