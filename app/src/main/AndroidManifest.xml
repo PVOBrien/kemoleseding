@@ -38,6 +38,14 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name = "un"
+            android:value = "${USERNAME}"/>
+
+        <meta-data
+            android:name = "pw"
+            android:value = "${PASSWORD}"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.kml.github.kemoleseding.provider"
