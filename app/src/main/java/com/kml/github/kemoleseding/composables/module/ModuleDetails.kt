@@ -33,7 +33,7 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
             text = theSummary,
             maxLines = if (isExpanded) Int.MAX_VALUE else 6,
             overflow = TextOverflow.Ellipsis,
-//            color = Color.White,
+            color = Color.Black,
             fontFamily = FontFamily.Serif,
             fontSize = 3.em,
             modifier = Modifier.background(kmlLightBlue)

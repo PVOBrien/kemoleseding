@@ -3,6 +3,8 @@ package com.kml.github.kemoleseding
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
 import androidx.core.content.FileProvider
@@ -118,10 +120,15 @@ fun loginToAWS(context: Context) {
         Log.e("Amplify", "Amplify Error: ", error)
     }
 
-    Amplify.Auth.signIn("username", "Password123",
+    val aiDeet: ApplicationInfo = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+    val un = aiDeet.metaData["un"] as String
+    val pw = aiDeet.metaData["pw"] as String
+
+    Amplify.Auth.signIn(un, pw,
         { result ->
             if (result.isSignInComplete) {
                 Log.i("AuthQuickstart", "Sign in succeeded")
+                println("now with secrets: $un and $pw")
             } else {
                 Log.i("AuthQuickstart", "Sign in not complete")
             }
