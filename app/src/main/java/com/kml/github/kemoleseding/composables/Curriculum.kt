@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -31,7 +30,7 @@ fun Curriculum(viewModel: MainViewModel) {
     viewModel.setCurrentScreen(Screens.TopScreens.Curriculum)
 
     Surface(
-        color = Color.LightGray,
+        color = kmlLightBlue,
         modifier = Modifier
             .fillMaxSize()
     ) {

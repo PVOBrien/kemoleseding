@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 
 @ExperimentalAnimationApi
@@ -41,7 +40,7 @@ fun MCard(
                 expanded = !expanded
             }
         },
-        colors = ButtonDefaults.buttonColors(backgroundColor = kmlLightBlue),
+        colors = ButtonDefaults.buttonColors(backgroundColor = kmlRed),
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier.shadow(
             5.dp,

@@ -6,15 +6,10 @@ class Module(
     val title: String,
     val summary: String,
     val modPhoto: Int,
-    val docList: List<DocDetails>,
-
-    )
-
-data class DocDetails(
-    val docName: String,
-    val docDescription: String,
-    val picType: Int,
+    val docList: List<DocDetails>
 )
+
+data class DocDetails(val docName: String, val docDescription: String, val picType: Int)
 
 val modOne = Module(
     "HIV in Botswana Then and Now",
@@ -23,7 +18,7 @@ val modOne = Module(
     listOf(
         DocDetails("modanswerone", "Answers", R.drawable.key),
         DocDetails("modonedisc", "Discussion\nQuestions", R.drawable.qpunc),
-        DocDetails("modOneSubSETS.mp4", "Video", R.drawable.ic_baseline_play_circle_filled_24),
+        DocDetails("modoneplay", "Play Video", R.drawable.ic_baseline_play_circle_filled_24)
     )
 )
 
@@ -33,8 +28,7 @@ val modTwo = Module(
     R.drawable.mod_two_pic,
     listOf(
         DocDetails("modanswertwo", "Answers", R.drawable.key),
-        DocDetails("modqtwo", "Discussion\nQuestions", R.drawable.qpunc),
-        DocDetails("modTwoSubSETS.mp4", "Video", R.drawable.ic_baseline_play_circle_filled_24)
+        DocDetails("modqtwo", "Discussion\nQuestions", R.drawable.qpunc)
     )
 )
 
@@ -45,8 +39,7 @@ val modThree = Module(
     listOf(
         DocDetails("daysfriends", "Script", R.drawable.script),
         DocDetails("modanswerthree", "Answers", R.drawable.key),
-        DocDetails("modqthree", "Discussion\nQuestions", R.drawable.qpunc),
-        DocDetails("modThreeSubSETS.mp4", "Video", R.drawable.ic_baseline_play_circle_filled_24)
+        DocDetails("modqthree", "Discussion\nQuestions", R.drawable.qpunc)
     )
 )
 
@@ -56,7 +49,6 @@ val modFour = Module(
     R.drawable.mod_four_pic,
     listOf(
         DocDetails("modanswerfour", "Answers", R.drawable.key),
-        DocDetails("modqfour", "Discussion\nQuestions", R.drawable.qpunc),
-        DocDetails("modFourSubSETS.mp4", "Video", R.drawable.ic_baseline_play_circle_filled_24)
+        DocDetails("modqfour", "Discussion\nQuestions", R.drawable.qpunc)
     )
 )
