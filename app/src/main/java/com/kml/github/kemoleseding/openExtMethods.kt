@@ -10,7 +10,9 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.amplifyframework.AmplifyException
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
+import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.options.StorageDownloadFileOptions
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
@@ -120,7 +122,8 @@ fun loginToAWS(context: Context) {
         Log.e("Amplify", "Amplify Error: ", error)
     }
 
-    val aiDeet: ApplicationInfo = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+    val aiDeet: ApplicationInfo =
+        context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
     val un = aiDeet.metaData["un"] as String
     val pw = aiDeet.metaData["pw"] as String
 
@@ -164,6 +167,6 @@ private fun downloadVideo(context: Context, s3Key: String) {
     Amplify.Storage.downloadFile(s3Key, aFile, options,
         { Log.i("S3.download", "% Download: ${it.fractionCompleted}") },
         { Log.i("S3.download", "Successfully downloaded: ${it.file.name}") },
-        { Log.e("S3.download",  "Download Failure", it) }
+        { Log.e("S3.download", "Download Failure", it) }
     )
 }
