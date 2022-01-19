@@ -1,4 +1,4 @@
-package com.kml.github.kemoleseding.composables
+package com.kml.github.kemoleseding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,15 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
-import com.kml.github.kemoleseding.screensFromDrawer
-import com.kml.github.kemoleseding.ui.theme.kmlYellow
+import com.kml.github.kemoleseding.ui.theme.Typography
 
 @Composable
 fun MDrawerContent(onDestinationClicked: (route: String) -> Unit) {
 
     Column(
         modifier = Modifier
-            .background(kmlYellow)
+            .background(Color.LightGray)
             .fillMaxWidth()
             .fillMaxHeight(),
     )
@@ -32,12 +31,14 @@ fun MDrawerContent(onDestinationClicked: (route: String) -> Unit) {
                     .clickable {
                         onDestinationClicked(screen.route)
                     },
+                style = Typography.h1,
                 fontSize = 6.em
             )
             Divider(
                 modifier = Modifier
                     .padding(5.dp)
-                    .background(Color.Black),
+                    .background(Color.Black)
+                    .width(80.dp),
                 color = Color.Black,
                 thickness = 3.dp
             )

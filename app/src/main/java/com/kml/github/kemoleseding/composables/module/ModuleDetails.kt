@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.em
+import com.kml.github.kemoleseding.ui.theme.Typography
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 
@@ -34,8 +35,8 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
             maxLines = if (isExpanded) Int.MAX_VALUE else 6,
             overflow = TextOverflow.Ellipsis,
             color = Color.Black,
-            fontFamily = FontFamily.Serif,
-            fontSize = 3.em,
+            style = Typography.body2,
+            fontSize = 3.5.em,
             modifier = Modifier.background(kmlLightBlue)
         )
     }

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -55,7 +56,7 @@ fun MCard(
                     .fillMaxWidth()
                     .padding(top = 0.dp, bottom = 0.dp)
                     .offset(y = (-4).dp),
-                fontFamily = FontFamily.SansSerif,
+                fontFamily = SansSerif,
                 fontSize = 4.em,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black

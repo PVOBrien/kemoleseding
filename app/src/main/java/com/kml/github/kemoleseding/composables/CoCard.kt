@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 
 @Composable
@@ -26,14 +28,15 @@ fun CoCard(
     Card() {
         Column(
             modifier = Modifier
-                .background(SolidColor(kmlLightBlue)),
+                .background(SolidColor(Color.LightGray)),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = cosName,
                 style = MaterialTheme.typography.h4,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(8.dp),
+                fontSize = 8.em
             )
             Image(
                 painter = painterResource(id = cosPic),
@@ -52,9 +55,9 @@ fun CoCard(
                         SolidColor(Color.White),
                         alpha = .5F
                     )
-                    .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp)
+                    .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 12.dp),
+                fontSize = 12.sp
             )
-
         }
     }
 }

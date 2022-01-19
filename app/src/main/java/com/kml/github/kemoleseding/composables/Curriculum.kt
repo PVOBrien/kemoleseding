@@ -69,7 +69,7 @@ fun Curriculum(viewModel: MainViewModel) {
             Button(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = kmlYellow,
-                    contentColor = kmlRed
+                    contentColor = Color.Black
                 ),
                 onClick = {
                     println("hello email!")
