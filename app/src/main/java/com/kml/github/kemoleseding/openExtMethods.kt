@@ -10,9 +10,7 @@ import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.amplifyframework.AmplifyException
-import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
-import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.storage.options.StorageDownloadFileOptions
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
@@ -131,7 +129,6 @@ fun loginToAWS(context: Context) {
         { result ->
             if (result.isSignInComplete) {
                 Log.i("AuthQuickstart", "Sign in succeeded")
-                println("now with secrets: $un and $pw")
             } else {
                 Log.i("AuthQuickstart", "Sign in not complete")
             }
