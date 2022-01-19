@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kml.github.kemoleseding.MainViewModel
@@ -29,7 +30,7 @@ fun KemoLesedingTheme(
     val modList: List<Module> = listOf(modOne, modTwo, modThree, modFour)
 
     Surface(
-        color = kmlLightBlue,
+        color = Color.White,
         modifier = Modifier
             .fillMaxSize()
             .clickable(

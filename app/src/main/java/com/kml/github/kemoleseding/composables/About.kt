@@ -24,7 +24,7 @@ fun About(viewModel: MainViewModel) {
 
     viewModel.setCurrentScreen(Screens.TopScreens.About)
     Surface(
-        color = kmlLightBlue,
+        color = Color.LightGray,
         modifier = Modifier
             .fillMaxSize()
     ) {
