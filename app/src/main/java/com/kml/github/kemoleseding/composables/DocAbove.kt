@@ -110,11 +110,11 @@ fun DocAbove(
                                                 val uri: Uri = fileCreateAndUri(
                                                     context,
                                                     item.docName
-                                                ) // TODO: best practices https://developer.android.com/training/permissions/requesting
+                                                )
                                                 openFile(
                                                     context,
                                                     uri
-                                                ) // OR openFile(context, file.toUri())
+                                                )
                                             }
                                         }
                                     )
@@ -165,8 +165,8 @@ fun DocAbove(
 fun DownloadBar(percent: Double) {
     Row(modifier = Modifier.padding(4.dp).fillMaxWidth(.5F)) {
         Text(text = "Download Status")
-        LinearProgressIndicator( // https://foso.github.io/Jetpack-Compose-Playground/material/linearprogressindicator/
-            progress = percent.toFloat(), //  downloadPercent.value
+        LinearProgressIndicator(
+            progress = percent.toFloat(),
             modifier = Modifier
                 .padding(4.dp, 6.dp, 4.dp, 4.dp)
                 .heightIn(8.dp),
@@ -177,7 +177,7 @@ fun DownloadBar(percent: Double) {
 
 @Composable
 fun AlertDialog(
-    context: Context, // context ready for Toast making https://www.geeksforgeeks.org/alertdialog-in-android-using-jetpack-compose/
+    context: Context,
     openD: MutableState<Boolean>,
     video: String,
     downloadPercent: MutableState<Double>,

@@ -15,7 +15,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
@@ -49,10 +48,10 @@ fun KmLApp() {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val currentScreen by viewModel.currentScreen.observeAsState()
-    var openMod by rememberSaveable { mutableStateOf(false) } // https://developer.android.com/reference/kotlin/androidx/compose/runtime/saveable/package-summary#rememberSaveable(kotlin.Array,androidx.compose.runtime.saveable.Saver,kotlin.String,kotlin.Function0)
+    var openMod by rememberSaveable { mutableStateOf(false) }
 
     @Composable
-    fun topBar(title: String = "", buttonIcon: ImageVector) {
+    fun topBar(title: String = "") {
         TopAppBar(
             title = {
                 Text(title, color = Color.White)
@@ -82,7 +81,7 @@ fun KmLApp() {
         scaffoldState = scaffoldState,
         topBar = {
             if (!currentScreen?.route.equals("SplashScreen")) {
-                topBar(currentScreen!!.title, buttonIcon = Icons.Filled.Menu)
+                topBar(currentScreen!!.title)
             }
         },
         drawerContent = {

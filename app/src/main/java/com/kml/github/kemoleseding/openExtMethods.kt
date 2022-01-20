@@ -153,7 +153,7 @@ private fun downloadVideo(context: Context, s3Key: String) {
 //
 //    val aFile = File("${context.getExternalFilesDir("Movies")}/modOneSubSETS.mp4")
 //    val region = Region.getRegion(Regions.US_WEST_2)
-//    val credentials = BasicAWSCredentials("AKIA22QL3JHWZWUIOMGK", "wjuRVF8QfgrxbbVjMaNHCUiiMdUzIDVWIog54jKo")
+//    val credentials = BasicAWSCredentials("---", "----") // yes, these credentials are dead.
 //    val staticCredentialsProvider = StaticCredentialsProvider(credentials)
 //    val options = StorageDownloadFileOptions.builder()......
 

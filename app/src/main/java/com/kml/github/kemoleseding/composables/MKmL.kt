@@ -16,7 +16,6 @@ import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
 import com.kml.github.kemoleseding.composables.module.MCard
 import com.kml.github.kemoleseding.objModules.*
-import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 
 @ExperimentalAnimationApi
 @Composable

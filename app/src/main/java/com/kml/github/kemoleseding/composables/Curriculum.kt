@@ -20,8 +20,6 @@ import androidx.core.content.ContextCompat
 import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
 import com.kml.github.kemoleseding.R
-import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
-import com.kml.github.kemoleseding.ui.theme.kmlRed
 import com.kml.github.kemoleseding.ui.theme.kmlYellow
 
 @Composable

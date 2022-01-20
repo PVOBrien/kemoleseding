@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 
 @Composable
 fun CoCard(
