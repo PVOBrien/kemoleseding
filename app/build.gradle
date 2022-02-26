@@ -37,10 +37,6 @@ android {
     buildFeatures {
         compose true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version // no longer necessary.
-        kotlinCompilerVersion '1.5.21' // works if kotlinCompilerExtensionVersion compose_version is deleted/commented out. otherwise is request to be 1.5.10
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
