@@ -13,11 +13,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontFamily.Companion.SansSerif
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 
@@ -57,7 +59,7 @@ fun MCard(
                     .padding(top = 0.dp, bottom = 0.dp)
                     .offset(y = (-4).dp),
                 fontFamily = SansSerif,
-                fontSize = 4.em,
+                fontSize = if (LocalConfiguration.current.screenWidthDp >= 400) 28.sp else 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )

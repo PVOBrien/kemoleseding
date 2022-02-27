@@ -10,13 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.kml.github.kemoleseding.ui.theme.Typography
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
-import com.kml.github.kemoleseding.ui.theme.kmlRed
 
 @Composable
 fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
@@ -36,8 +36,9 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
             overflow = TextOverflow.Ellipsis,
             color = Color.Black,
             style = Typography.body2,
-            fontSize = 3.5.em,
+            fontSize = if (LocalConfiguration.current.screenWidthDp <= 400) 15.sp else 20.sp,
             modifier = Modifier.background(kmlLightBlue)
         )
+        println(LocalConfiguration.current.screenWidthDp)
     }
 }
