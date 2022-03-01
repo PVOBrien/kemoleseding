@@ -59,7 +59,7 @@ fun MCard(
                     .padding(top = 0.dp, bottom = 0.dp)
                     .offset(y = (-4).dp),
                 fontFamily = SansSerif,
-                fontSize = if (LocalConfiguration.current.screenWidthDp >= 400) 28.sp else 16.sp,
+                fontSize = if (LocalConfiguration.current.screenWidthDp <= 400) 16.sp else 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )

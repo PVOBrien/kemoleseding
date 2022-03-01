@@ -2,10 +2,22 @@ package com.kml.github.kemoleseding
 
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 
-class Dimensions(
-    val type_size_standard: TextUnit,
-    val type_size_title: TextUnit,
+// https://proandroiddev.com/supporting-different-screen-sizes-on-android-with-jetpack-compose-f215c13081bd
+
+class TypeDimensions(
+    val typeSizeContent: TextUnit,
+    val typeSizeTitle: TextUnit
 )
 
-val phoneDimensions = Dimensions(type_size_standard = 6.0F.em, type_size_title = 60.0F.em)
+
+val typeDimensionPhone = TypeDimensions(
+    typeSizeContent =  12.sp,
+    typeSizeTitle =  18.sp
+)
+
+val typeDimensionTablet = TypeDimensions(
+    typeSizeContent = 36.sp,
+    typeSizeTitle = 28.sp
+)

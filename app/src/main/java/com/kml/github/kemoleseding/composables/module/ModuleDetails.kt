@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.kml.github.kemoleseding.composables.AppTheme
 import com.kml.github.kemoleseding.ui.theme.Typography
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 
@@ -36,9 +37,12 @@ fun ModuleDetails(theSummary: String, isExpanded: Boolean) {
             overflow = TextOverflow.Ellipsis,
             color = Color.Black,
             style = Typography.body2,
-            fontSize = if (LocalConfiguration.current.screenWidthDp <= 400) 15.sp else 20.sp,
+            fontSize = AppTheme.dimens.typeSizeContent,
+//            fontSize = if (LocalConfiguration.current.screenWidthDp <= 400) 45.sp else 50.sp,
             modifier = Modifier.background(kmlLightBlue)
         )
-        println(LocalConfiguration.current.screenWidthDp)
+        println("Screen Width: " + LocalConfiguration.current.screenWidthDp)
+        println("dimen: " + AppTheme.dimens.typeSizeContent.value)
+
     }
 }

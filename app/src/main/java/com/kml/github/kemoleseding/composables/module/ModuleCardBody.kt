@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.kml.github.kemoleseding.composables.AppTheme
 
 @ExperimentalAnimationApi
 @Composable
@@ -21,6 +22,6 @@ fun ModuleCardBody(
             .wrapContentSize()
     ) {
         MPic(picInt, isExpanded, cardCount, onFileShowChange, onWhichModChange)
-        ModuleDetails(mSummary, isExpanded)
+        AppTheme (content = { ModuleDetails(mSummary, isExpanded) })
     }
 }
