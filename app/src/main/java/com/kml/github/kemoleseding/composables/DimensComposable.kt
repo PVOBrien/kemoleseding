@@ -8,7 +8,7 @@ import com.kml.github.kemoleseding.typeDimensionPhone
 import com.kml.github.kemoleseding.typeDimensionTablet
 
 @Composable
-fun ProvideDimens(
+fun ProvideDimens( // https://proandroiddev.com/supporting-different-screen-sizes-on-android-with-jetpack-compose-f215c13081bd
     dimensions: TypeDimensions,
     content: @Composable () -> Unit
 ) {

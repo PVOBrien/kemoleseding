@@ -18,6 +18,6 @@ val typeDimensionPhone = TypeDimensions(
 )
 
 val typeDimensionTablet = TypeDimensions(
-    typeSizeContent = 36.sp,
+    typeSizeContent = 18.sp,
     typeSizeTitle = 28.sp
 )
