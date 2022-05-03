@@ -13,8 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
 import com.kml.github.kemoleseding.composables.AppTheme
 import com.kml.github.kemoleseding.ui.theme.Typography
 import com.kml.github.kemoleseding.ui.theme.kmlLightBlue

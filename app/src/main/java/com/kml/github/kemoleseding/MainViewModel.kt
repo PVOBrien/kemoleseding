@@ -1,10 +1,16 @@
 package com.kml.github.kemoleseding
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.prefs.Preferences
 
 class MainViewModel : ViewModel() {
+
+//    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings") // Todo: https://developer.android.com/codelabs/android-preferences-datastore#0
 
     private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
     val currentScreen: LiveData<Screens> = _currentScreen

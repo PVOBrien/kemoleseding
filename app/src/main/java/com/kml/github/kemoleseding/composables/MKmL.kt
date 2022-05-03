@@ -22,7 +22,8 @@ import com.kml.github.kemoleseding.objModules.*
 fun KemoLesedingTheme(
     viewModel: MainViewModel,
     modDown: (Boolean) -> Unit,
-    openMod: Boolean
+    openMod: Boolean,
+    isSetswana: Boolean
 ) {
     viewModel.setCurrentScreen((Screens.TopScreens.Home))
     var whichMod by remember { mutableStateOf(0) }
@@ -54,9 +55,10 @@ fun KemoLesedingTheme(
                         textAlign = TextAlign.Center
                     )
                 }
+                val modSummary = if (!isSetswana) item.summaryENG else item.summarySET
                 MCard(
                     item.title,
-                    item.summary,
+                    modSummary,
                     item.modPhoto,
                     itemCount,
                     openMod,

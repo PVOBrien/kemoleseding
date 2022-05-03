@@ -90,7 +90,7 @@ fun DocAbove(
                                             val file =
                                                 File("${context.getExternalFilesDir("Movies")}" + "/${item.docName}")
                                             println("Does $file exist: ${file.exists()}")
-                                            if (!file.exists() && item.docDescription == "Video") {
+                                            if (!file.exists() && item.docDescriptionENG == "Video") {
                                                 alertDialogItem.value = item
                                                 videoName.value = item.docName
                                                 openDialog.value = !file.exists()
@@ -105,7 +105,7 @@ fun DocAbove(
                                                 val intent = Intent(context, Video::class.java)
                                                 intent.putExtra("video", uri.toString())
                                                 context.startActivity(intent)
-                                            } else if (item.docDescription != "Video") {
+                                            } else if (item.docDescriptionENG != "Video") {
                                                 println("Opening PDF")
                                                 val uri: Uri = fileCreateAndUri(
                                                     context,
@@ -120,7 +120,7 @@ fun DocAbove(
                                     )
                             )
                             Text(
-                                text = item.docDescription,
+                                text = item.docDescriptionENG,
                                 modifier = Modifier
                                     .padding(start = 12.dp, end = 12.dp, bottom = 8.dp)
                                     .clickable(

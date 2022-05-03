@@ -14,11 +14,10 @@ import androidx.compose.ui.unit.dp
 import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
 import com.kml.github.kemoleseding.objModules.CoCardEntry
-import com.kml.github.kemoleseding.ui.theme.kmlLightBlue
 import com.kml.github.kemoleseding.objModules.*
 
 @Composable
-fun About(viewModel: MainViewModel) {
+fun About(viewModel: MainViewModel, isSETS: Boolean, ) {
 
     val coCardList: List<CoCardEntry> = listOf(tbc, pc)
 
@@ -33,7 +32,7 @@ fun About(viewModel: MainViewModel) {
                 CoCard(
                     item.coPic,
                     item.coName,
-                    item.coDesc
+                    if (!isSETS) item.coDescENG else item.coDescSETS
                 )
                 if (idx < coCardList.size - 1)
                     Divider(

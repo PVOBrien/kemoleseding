@@ -1,5 +1,6 @@
 package com.kml.github.kemoleseding
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,11 +30,11 @@ import androidx.navigation.compose.rememberNavController
 import com.kml.github.kemoleseding.composables.*
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 import kotlinx.coroutines.launch
+import java.util.prefs.Preferences
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             loginToAWS(LocalContext.current)
             KmLApp()
@@ -49,6 +52,7 @@ fun KmLApp() {
     val scope = rememberCoroutineScope()
     val currentScreen by viewModel.currentScreen.observeAsState()
     var openMod by rememberSaveable { mutableStateOf(false) }
+    var topWhichLang by remember { mutableStateOf(viewModel.isSetswana) }
 
     @Composable
     fun topBar(title: String = "") {
@@ -85,7 +89,7 @@ fun KmLApp() {
             }
         },
         drawerContent = {
-            MDrawerContent() { route ->
+            MDrawerContent(viewModel, topWhichLang, { topWhichLang = !topWhichLang }) { route ->
                 println("this is $route")
                 scope.launch {
                     scaffoldState.drawerState.close()
@@ -114,9 +118,9 @@ fun KmLApp() {
             )
             {
                 composable(Screens.TopScreens.SplashScreen.route) { SplashScreen(navController = navController) }
-                composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel, modDown = { openMod = !openMod }, openMod) }
+                composable(Screens.TopScreens.Home.route) { KemoLesedingTheme(viewModel = viewModel, modDown = { openMod = !openMod }, openMod, topWhichLang) }
                 composable(Screens.TopScreens.Curriculum.route) { Curriculum(viewModel = viewModel) }
-                composable(Screens.TopScreens.About.route) { About(viewModel = viewModel) }
+                composable(Screens.TopScreens.About.route) { About(viewModel = viewModel, topWhichLang) }
             }
         }
     )
