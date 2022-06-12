@@ -148,8 +148,7 @@ private fun downloadVideo(context: Context, s3Key: String) {
 
 // =************************************=
 
-// TODO: https://github.com/nimran/Amazon-S3-Integration-in-Android for using S3 TransferUtility, instead of logging in. :)
-// OR https://docs.aws.amazon.com/mobile/sdkforxamarin/developerguide/getting-started-store-retrieve-s3-transferutility.html
+// TODO: https://github.com/awslabs/aws-sdk-android-samples/blob/main/S3TransferUtilitySample/src/com/amazonaws/demo/s3transferutility/DownloadActivity.java for using S3 TransferUtility, instead of logging in. :)
 //
 //    val aFile = File("${context.getExternalFilesDir("Movies")}/modOneSubSETS.mp4")
 //    val region = Region.getRegion(Regions.US_WEST_2)
