@@ -1,6 +1,6 @@
 package com.kml.github.kemoleseding
 
-import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,8 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,23 +28,35 @@ import androidx.navigation.compose.rememberNavController
 import com.kml.github.kemoleseding.composables.*
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 import kotlinx.coroutines.launch
-import java.util.prefs.Preferences
+import androidx.preference.PreferenceManager
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var sPs: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sPs = PreferenceManager.getDefaultSharedPreferences(this)
+        editor = sPs.edit()
+
         setContent {
             loginToAWS(LocalContext.current)
-            KmLApp()
+            KmLApp(sPs)
         }
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun KmLApp() {
+fun KmLApp(sPs: SharedPreferences) {
+
+    var language = sPs.getBoolean("language", false)
 
     val viewModel: MainViewModel = viewModel()
+    viewModel.isSetswana = language
+
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -125,9 +135,9 @@ fun KmLApp() {
         }
     )
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    KmLApp()
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    KmLApp(sPs)
+//}
