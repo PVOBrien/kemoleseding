@@ -48,6 +48,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// https://developer.android.com/training/dependency-injection/hilt-android it's gonna get crazy.
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun KmLApp(sPs: SharedPreferences) {
