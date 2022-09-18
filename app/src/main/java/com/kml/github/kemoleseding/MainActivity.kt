@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -29,8 +29,16 @@ import com.kml.github.kemoleseding.composables.*
 import com.kml.github.kemoleseding.ui.theme.kmlRed
 import kotlinx.coroutines.launch
 import androidx.preference.PreferenceManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val testVM: HiltViewModelThis by viewModels()
+
+    @Inject
+    lateinit var hiltClasses: HiltClasses
 
     private lateinit var sPs: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
@@ -38,8 +46,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        println(testVM.sPToVM.appSharedPrefs.all)
+
         sPs = PreferenceManager.getDefaultSharedPreferences(this)
         editor = sPs.edit()
+
+        println(hiltClasses.doAThing())
+        println(hiltClasses.doThatOtherThing())
 
         setContent {
             loginToAWS(LocalContext.current)
