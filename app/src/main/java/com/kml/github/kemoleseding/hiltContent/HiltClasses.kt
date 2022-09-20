@@ -1,4 +1,4 @@
-package com.kml.github.kemoleseding
+package com.kml.github.kemoleseding.hiltContent
 
 import javax.inject.Inject
 

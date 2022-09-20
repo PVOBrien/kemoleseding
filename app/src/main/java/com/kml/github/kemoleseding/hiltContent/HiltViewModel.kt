@@ -1,4 +1,4 @@
-package com.kml.github.kemoleseding
+package com.kml.github.kemoleseding.hiltContent
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle

@@ -35,10 +35,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val testVM: HiltViewModelThis by viewModels()
-
-    @Inject
-    lateinit var hiltClasses: HiltClasses
 
     private lateinit var sPs: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
@@ -46,13 +42,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        println(testVM.sPToVM.appSharedPrefs.all)
+//        println(testVM.sPToVM.appSharedPrefs.all)
 
         sPs = PreferenceManager.getDefaultSharedPreferences(this)
         editor = sPs.edit()
 
-        println(hiltClasses.doAThing())
-        println(hiltClasses.doThatOtherThing())
+//        println(hiltClasses.doAThing())
+//        println(hiltClasses.doThatOtherThing())
 
         setContent {
             loginToAWS(LocalContext.current)
