@@ -3,9 +3,9 @@ package com.kml.github.kemoleseding.composables
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalConfiguration
-import com.kml.github.kemoleseding.TypeDimensions
-import com.kml.github.kemoleseding.typeDimensionPhone
-import com.kml.github.kemoleseding.typeDimensionTablet
+import com.kml.github.kemoleseding.ui.theme.TypeDimensions
+import com.kml.github.kemoleseding.ui.theme.typeDimensionPhone
+import com.kml.github.kemoleseding.ui.theme.typeDimensionTablet
 
 @Composable
 fun ProvideDimens( // https://proandroiddev.com/supporting-different-screen-sizes-on-android-with-jetpack-compose-f215c13081bd
