@@ -9,7 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@HiltViewModel
+@HiltViewModel // https://codingwithmitch.com/courses/jetpack-compose-mvvm-for-beginners/hilt-viewmodels-and-dependency-injection/
 class HiltViewModelThis @Inject constructor( // https://dagger.dev/hilt/view-model
     val handle: SavedStateHandle,
     val sPToVM: SharedPrefsToVM
