@@ -1,32 +1,30 @@
 package com.kml.github.kemoleseding
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.ui.platform.LocalContext
-import androidx.preference.PreferenceManager
 import com.kml.github.kemoleseding.composables.KmLApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var sPs: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
+//    private lateinit var sPs: SharedPreferences
+//    private lateinit var editor: SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        println(testVM.sPToVM.appSharedPrefs.all)
 
-        sPs = PreferenceManager.getDefaultSharedPreferences(this)
-        editor = sPs.edit()
+//        sPs = PreferenceManager.getDefaultSharedPreferences(this)
+//        editor = sPs.edit()
 
 //        println(hiltClasses.doAThing())
 //        println(hiltClasses.doThatOtherThing())
 
         setContent {
             loginToAWS(LocalContext.current)
-            KmLApp(sPs)
+            KmLApp() // sPs
         }
     }
 }

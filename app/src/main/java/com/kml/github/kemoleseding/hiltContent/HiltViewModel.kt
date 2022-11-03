@@ -1,6 +1,7 @@
 package com.kml.github.kemoleseding.hiltContent
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,11 +14,18 @@ import javax.inject.Singleton
 
 @HiltViewModel // https://codingwithmitch.com/courses/jetpack-compose-mvvm-for-beginners/hilt-viewmodels-and-dependency-injection/
 class HiltViewModelThis @Inject constructor( // https://dagger.dev/hilt/view-model
-//    val sPToVM: SharedPrefsToVM
+    @ApplicationContext context: Context,
+//    private val sPToVM: SharedPrefsToVM
 ) : ViewModel() {
+
+    private val sharedPreferencesTest: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+    var language = sharedPreferencesTest.getBoolean("language", false)
+
+
     private val _currentScreen: MutableLiveData<Screens> = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
     val currentScreen: LiveData<Screens> = _currentScreen
-    var isSetswana: Boolean = false
+    var isSetswana: Boolean = language
     fun changeLanguage() {
         println("change, setLanguage()!")
         isSetswana = !isSetswana
