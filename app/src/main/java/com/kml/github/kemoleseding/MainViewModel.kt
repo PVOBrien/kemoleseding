@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
         _currentScreen.value = screen
     }
 
-    fun changeLanguage() { // TODO: implement when we have Setswana
+    fun changeLanguage() {
         println("change, setLanguage()!")
         isSetswana = !isSetswana
     }
