@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,18 +28,18 @@ import kotlinx.coroutines.launch
 @Composable
 fun KmLApp() { //sPs: SharedPreferences
 
-    val testVM: HiltViewModelThis = hiltViewModel() // https://stackoverflow.com/questions/70457125/how-to-inject-a-singleton-using-hilt-inside-a-composable#:~:text=You%20cannot%20inject%20dependencies%20into%20a%20function%2C%20which,values%20returned%20by%20Hilt%20functions%2C%20like%20hiltViewModel%20%28%29
+    val viewModel: HiltViewModelThis = hiltViewModel() // https://stackoverflow.com/questions/70457125/how-to-inject-a-singleton-using-hilt-inside-a-composable#:~:text=You%20cannot%20inject%20dependencies%20into%20a%20function%2C%20which,values%20returned%20by%20Hilt%20functions%2C%20like%20hiltViewModel%20%28%29
 //    println(testVM.isSetswana)
 //    println(testVM.changeLanguage())
 //    println(testVM.isSetswana)
 //    @Inject
 //    lateinit var hiltClasses: HiltClasses
 
-//    var language = sPs.getBoolean("language", false)
-//    println("the language: $language")
+    var language = viewModel.isSetswana
+    println("the language: $language")
 
-    val viewModel: MainViewModel = viewModel()
-    testVM.isSetswana = false
+//    val viewModel: MainViewModel = viewModel()
+//    testVM.isSetswana = false
 
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()

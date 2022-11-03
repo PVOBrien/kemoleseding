@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
+import com.kml.github.kemoleseding.hiltContent.HiltViewModelThis
 import com.kml.github.kemoleseding.objModules.CoCardEntry
 import com.kml.github.kemoleseding.objModules.*
 
 @Composable
-fun About(viewModel: MainViewModel, isSETS: Boolean, ) {
+fun About(viewModel: HiltViewModelThis, isSETS: Boolean, ) {
 
     val coCardList: List<CoCardEntry> = listOf(tbc, pc)
 

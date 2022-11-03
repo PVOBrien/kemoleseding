@@ -11,13 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import com.kml.github.kemoleseding.hiltContent.HiltViewModelThis
 import com.kml.github.kemoleseding.ui.theme.Typography
 
 @Composable
-fun MDrawerContent(viewModel: MainViewModel,
-                   isSets: Boolean,
-                   languageChange: (Boolean) -> Unit,
-                   onDestinationClicked: (route: String) -> Unit) {
+fun MDrawerContent(
+    viewModel: HiltViewModelThis,
+    isSets: Boolean,
+    languageChange: (Boolean) -> Unit,
+    onDestinationClicked: (route: String) -> Unit) {
 //    val mChecked = remember { mutableStateOf(viewModel.isSetswana) }
 
     Column(

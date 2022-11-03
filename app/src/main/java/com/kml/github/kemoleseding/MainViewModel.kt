@@ -7,16 +7,16 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel() {
 
 
-    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
-    val currentScreen: LiveData<Screens> = _currentScreen
-    var isSetswana = false
-
-    fun setCurrentScreen(screen: Screens) {
-        _currentScreen.value = screen
-    }
-
-    fun changeLanguage() {
-        println("change, setLanguage()!")
-        isSetswana = !isSetswana
-    }
+//    private val _currentScreen = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
+//    val currentScreen: LiveData<Screens> = _currentScreen
+//    var isSetswana = false
+//
+//    fun setCurrentScreen(screen: Screens) {
+//        _currentScreen.value = screen
+//    }
+//
+//    fun changeLanguage() {
+//        println("change, setLanguage()!")
+//        isSetswana = !isSetswana
+//    }
 }

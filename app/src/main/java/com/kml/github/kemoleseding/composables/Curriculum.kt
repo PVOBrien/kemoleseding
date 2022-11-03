@@ -17,13 +17,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
 import com.kml.github.kemoleseding.R
+import com.kml.github.kemoleseding.hiltContent.HiltViewModelThis
 import com.kml.github.kemoleseding.ui.theme.kmlYellow
 
 @Composable
-fun Curriculum(viewModel: MainViewModel) {
+fun Curriculum(viewModel: HiltViewModelThis) {
 
     val context = LocalContext.current
     viewModel.setCurrentScreen(Screens.TopScreens.Curriculum)

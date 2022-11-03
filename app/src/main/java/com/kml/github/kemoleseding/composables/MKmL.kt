@@ -12,15 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.kml.github.kemoleseding.MainViewModel
 import com.kml.github.kemoleseding.Screens
 import com.kml.github.kemoleseding.composables.module.MCard
+import com.kml.github.kemoleseding.hiltContent.HiltViewModelThis
 import com.kml.github.kemoleseding.objModules.*
 
 @ExperimentalAnimationApi
 @Composable
 fun KemoLesedingTheme(
-    viewModel: MainViewModel,
+    viewModel: HiltViewModelThis,
     modDown: (Boolean) -> Unit,
     openMod: Boolean,
     isSetswana: Boolean
