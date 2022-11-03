@@ -14,14 +14,10 @@ import javax.inject.Singleton
 
 @HiltViewModel // https://codingwithmitch.com/courses/jetpack-compose-mvvm-for-beginners/hilt-viewmodels-and-dependency-injection/
 class HiltViewModelThis @Inject constructor( // https://dagger.dev/hilt/view-model
-    @ApplicationContext context: Context,
-//    private val sPToVM: SharedPrefsToVM
+    @ApplicationContext context: Context, // https://stackoverflow.com/questions/2691772/android-preferences-how-to-load-the-default-values-when-the-user-hasnt-used-th
 ) : ViewModel() {
-
     private val sharedPreferencesTest: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
     var language = sharedPreferencesTest.getBoolean("language", false)
-
 
     private val _currentScreen: MutableLiveData<Screens> = MutableLiveData<Screens>(Screens.TopScreens.SplashScreen)
     val currentScreen: LiveData<Screens> = _currentScreen
@@ -36,9 +32,9 @@ class HiltViewModelThis @Inject constructor( // https://dagger.dev/hilt/view-mod
     }
 }
 
-@Singleton
-class SharedPrefsToVM @Inject constructor(@ApplicationContext context: Context) { // https://developer.android.com/training/dependency-injection/hilt-android#java
-    val appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-} // https://www.bing.com/search?PC=U523&q=provide+app+context+with+Android+Hilt&pglt=515&FORM=ANNTA1&ntref=1
+//@Singleton
+//class SharedPrefsToVM @Inject constructor(@ApplicationContext context: Context) { // https://developer.android.com/training/dependency-injection/hilt-android#java
+//    val appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+//} // https://www.bing.com/search?PC=U523&q=provide+app+context+with+Android+Hilt&pglt=515&FORM=ANNTA1&ntref=1
 
 // https://stackoverflow.com/questions/67180046/how-to-inject-a-viewmodel-into-a-composable-function-using-hilt-jetpack-compose
